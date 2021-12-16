@@ -1,4 +1,4 @@
-# 🛠️  ONSTRUCT
+# 🛠️  CONSTRUCT
 
 Constructive Problem Solving Environment 
 
