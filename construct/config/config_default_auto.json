@@ -1,0 +1,1 @@
+{"verbose": false, "expts_folder": "experiments/", "agent": "random", "env": "PDDLEnvPolycraft-v0", "bias": "agents/random/bias/polycraft_complete.pddl", "goal": "(have ?x-pogostick1)"}
