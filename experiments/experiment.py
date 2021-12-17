@@ -1,5 +1,5 @@
 from agents.random.randomagent import RandomAgent
-# from agents.biplex.biplexagent import BiplexAgent
+from agents.biplex.biplexagent import BiplexAgent
 
 class Experiment:
 
@@ -15,6 +15,8 @@ class Experiment:
         agent = None
         if self.agent == "random":
             agent = RandomAgent(self.config)
+        elif self.agent == "biplex":
+            agent = BiplexAgent(self.config)
         if agent:
             self.solution = agent.solve()
             return
