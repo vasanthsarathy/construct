@@ -1,1 +1,1 @@
-{"verbose": false, "agent": "biplex", "expts_folder": "experiments/", "env": "PDDLEnvPolycraft-v0", "bias": "agents/random/bias/polycraft_complete.pddl", "goal": "(have ?x-pogostick1)"}
+{"verbose": false, "expts_folder": "experiments/", "agent": "biplex", "env": "PDDLEnvTreasure-v0", "bias": "agents/biplex/bias/treasure.pddl", "trees": "agents/biplex/trees/trees01.json", "goal": "(have ?x-p)"}

@@ -1,0 +1,14 @@
+initally R = hashtable of crafting trees (indexed by action name) and null tree with goal
+p = (g*, Σ, R, e)  
+
+prob_stack = [p]
+action_stack = [ ∅ ]
+
+def solve(prob_stack, action_stack):
+	a = action_stack.pop(0)  #initially this is a null action ∅ 
+	T = R.predecessors(a)  #set of all parent tnodes of a 
+	for tnode in T:
+		prove(tnode)
+	
+	
+	
