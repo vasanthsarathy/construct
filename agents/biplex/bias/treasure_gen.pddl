@@ -29,4 +29,9 @@
     :parameters (?x - object ?y - b)
     :precondition (and (in ?x ?y) (at ?y) (opened ?y))
     :effect (and (inworld ?x)))
+
+	(:action craftt
+		:parameters (?y69c - t ?xf84 - k ?x9e7 - s)
+		:precondition (and (have ?xf84) (have ?x9e7))
+		:effect (and (not (have ?xf84)) (not (have ?x9e7)) (have ?y69c)))
 )

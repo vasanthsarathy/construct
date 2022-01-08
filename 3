@@ -36,9 +36,6 @@ class BiplexAgent(Agent):
         self.type_keyed_objects, self.token_keyed_objects = self._get_objects() # objects from current state
         self.bound_objects = {}
         self.stopper = True
-        self.goals = [self.goal]
-        self.completed = []
-        self.grounded_actions = []
         print("🍁 Biplex agent initialized.\n")
 
     def add_objects(self, constant, typing):
@@ -71,24 +68,18 @@ class BiplexAgent(Agent):
         click.secho(f"Goal: {self.goal}", fg='blue')
 
         # Initial planning and execution with Stripped Domain File
-        status, s1 = self.sketch()
+        goal_in = self.goal
+        status, s1 = self.sketch(goal_in)
         if status:
-            print(f"Completed subgoals: {self.completed}")
-            print("Solved")
             return status, s1
         return False, s1
 
 
-    def sketch(self):
+    def sketch(self, goal_in):
         """
         High-level planner operating on the stripped domain
         The stripped domain has all the craft actions, but stripped down to zero precons
         """
-        print("----------------")
-        print(f"\t\tCOMPLETED: {self.completed}")
-        print(f"Objects: {self._get_objects_from_dicts()}")
-        print(f"GOALS PENDING: {self.goals}")
-        goal_in = self.goals.pop(0)
 
         s0 = self.env.observe() # Getting current state
 
@@ -99,16 +90,7 @@ class BiplexAgent(Agent):
 
         # --- Preparing problem file ------ #
         # Ground the goal
-        print(f"Goal in: {goal_in}")
         goal = self._ground_literal(goal_in)
-        print(f"Current goal: {goal}")
-
-        if goal in s0:
-            self.completed.append(goal)
-            return True, s0
-
-        if goal in self.completed:
-            return True, s0
 
         #We need to add objects from the craft actions
         # Look over nonexec domain and add objects from effects
@@ -133,14 +115,11 @@ class BiplexAgent(Agent):
         temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
         plan = self.plan(problem_file=temp_problem_file, domain_file=non_exec_domain_file)
         executable, non_executables = self._is_plan_executable(plan)
-        print(f"Nonexc: {non_executables}")
         if plan and executable:
             print(f"\tThis is an executable plan")
-            self.completed.append(goal)
             return self.execute(plan)
 
         if not plan:
-            print(f"Current state: {self.env.observe()}")
             print(f"\tGive up. Bye.")
             return False, s0
 
@@ -156,7 +135,6 @@ class BiplexAgent(Agent):
                         objects_to_construct.add(arg)
 
             for ob in objects_to_construct:
-                print("here")
                 status, s1 = self.prove(self.token_keyed_objects[ob])
                 if not status:
                     print(f"Unable to construct object {ob}")
@@ -251,6 +229,7 @@ class BiplexAgent(Agent):
         for arg in args:
             if not self._is_grounded_arg(arg):
                 return False
+        print(f"Literal {literal} is grounded")
         return True
 
 
@@ -272,6 +251,7 @@ class BiplexAgent(Agent):
 
         if "?" in arg:
             return False
+        print(f"Argument {arg} is grounded")
         return True
 
 
@@ -319,28 +299,21 @@ class BiplexAgent(Agent):
     def ground(self, anode):
         # Node expansion
         precon_types = list(self.kg.predecessors(str(anode)))
-        print(f"Precon types: {precon_types}")
         for tnode in precon_types:
-            print(f"ADDING: {tnode} as goal")
-            self.goals.insert(0, f"(have ?x-{tnode})")
-            status, s1 = self.sketch()
+            status, s1 = self.sketch(f"(have ?x-{tnode}")
             if not status:
                 return False, s1
 
         # once all resources have been acquired, it is time to perform craft action
         # Full fledged navigation and manipulation planning
-        if anode not in self.grounded_actions:
-            print(f"\tAction {anode} is grounded.")
-            self.grounded_actions.append(anode)
-            new_domain_file = self._create_new_domain_file(self.kg, anode, self.config['bias'])
-            goal = f"(have ?x-{list(self.kg.successors(anode))[0]})"
-            status, s1 = self.plan_execute(goal=goal, domain_file=new_domain_file)
-            if status:
-                print(f"ADDING: {goal} as goal")
-                self.goals.insert(0,self.goal)
-                return self.sketch()
-            return False, s1
-        return True, self.env.observe()
+        print(f"\tAction {anode} is grounded.")
+        new_domain_file = self._create_new_domain_file(self.kg, anode, self.config['bias'])
+        goal = f"(have ?x-{list(self.kg.successors(anode))[0]})"
+        # status, s1 = self.plan_execute(goal=goal, domain_file=new_domain_file)
+        status, s1 = self.sketch(goal)
+        if status:
+            return status, s1
+        return False, s1
 
 
     # Full fledged planning. Use carefully
@@ -359,64 +332,11 @@ class BiplexAgent(Agent):
         if plan:
             print(f"\tExecuting actions:")
             for idx,a in enumerate(plan):
-                click.secho(f"\t\t[{idx}] {a.name}", fg='red')  # need a.name here because these are Operators
+                click.secho(f"\t\t[{idx}] {a.name}", fg='red')
                 s1 = self.env.step(a.name)
             return True, s1
         print("\tNo plan found")
         return False, s0
-
-    def plan_execute(self, goal, domain_file):
-        goal = self._ground_literal(goal)
-        objects = self._get_objects_from_dicts()
-        init = set(self.env.observe())
-        temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
-        plan = self.plan(problem_file=temp_problem_file, domain_file=domain_file)
-
-        # Replace any args that have "*" with ?x-k
-        new_plan = []
-        to_remove = []
-        for op in plan:
-            name, args = self._parse_literal(op.name)
-            new_args = []
-            for arg in args:
-                if "*" in arg:
-                    # replace it with a ?x-type
-                    to_remove.append(arg)
-                    typing = self.token_keyed_objects[arg]
-                    variable = "?x"+str(uuid.uuid4())[:3]
-                    new_args.append(f"{variable}-{typing}")
-                    continue
-                new_args.append(arg)
-            new_op = self._construct_literal(name, new_args)
-            new_plan.append(new_op)
-
-        s0 = self.env.observe()
-        if new_plan:
-            for idx,a in enumerate(new_plan):
-                click.secho(f"\t\t[{idx}] {a}", fg='blue')
-                s1 = self.env.step(a)
-        else:
-            return False, s0
-
-        # Remove *k2323 from objects, and add the new k1 from (have k1) in current state
-        for token in to_remove:
-            typing = self.token_keyed_objects[token]
-            self._remove_token_from_objects(token)
-            for literal in self.env.observe():
-                name, args = self._parse_literal(literal)
-                if "have" in name:
-                    type_of_arg = self.env.objects()[args[0]]
-                    if type_of_arg.name == typing:
-                        self.add_objects(args[0],typing)
-
-        self.completed.append(goal)
-        return True, s1
-
-    def _remove_token_from_objects(self, token):
-        typing = self.token_keyed_objects[token]
-        del self.token_keyed_objects[token]
-        self.type_keyed_objects[typing].remove(token)
-        return True
 
 
     def _generate_temp_problem_file(self, goal, init, objects):
@@ -537,6 +457,23 @@ class BiplexAgent(Agent):
             for s in subgoals:
                 status, s1 = self.prove(s)
                 return status, s1
+
+    def plan_execute(self, goal, domain_file, scope="domain"):
+        print(f"blaaa: {goal}")
+        goal = self._ground_goal(goal)
+        print(f"blaaa GROUNDED: {goal}")
+        objects = self._get_objects_from_current_state(scope=scope, domain_file=domain_file)
+        init = set(self.env.observe())
+        temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
+        plan = self.plan(problem_file=temp_problem_file, domain_file=domain_file)
+        executable = self._is_executable(plan)
+        breakpoint()
+        s0 = self.env.observe()
+        if plan and executable:
+            return self.execute(plan)
+        else:
+            return False, s0
+
 
     def _generate_goal_from_action(self, action):
         """

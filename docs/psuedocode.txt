@@ -1,0 +1,63 @@
+# Casper Backtracking pseudoCode
+
+# goal: a TypeNode 
+# we have TypeNodes and ActionNodes
+
+
+def is_grounded(a, G, resources):
+	types = a.children() 
+	unproven = []
+	for t in types:
+		!is_provable(t, G, resources)
+			unproven.append(t)
+	grounded = False
+	if not unproven:
+		grounded = True
+		a.grounded = True
+		a.parent.provable = True
+	return grounded, unproven 
+
+def is_provable(t, G, resources): 
+	provable = False
+	if t in resources:
+		provable = True
+		t.set_binding(resource)
+	else:
+		actions = t.get_applicable_actions()
+		for a in actions:
+			if is_groundable(a, G):
+				provable = True
+				t.gen_sym()
+				break 
+	return provable
+		
+def binding(G):
+	provable = is_provable(G.root, G, resources) 
+		
+	
+		
+	 
+---> need to think about a subtree. 
+
+`
+
+
+%%%%%%
+
+
+
+a "type" node "is_provable" if one of two conditions hold :
+1. there is an instance of it in the available resources, OR
+2. there is no instance, but one of its "action" node children are
+groundable
+
+
+an "action node "is_groundable" if:
+1. All of its children (type nodes) are "provable" 
+
+  
+
+	
+
+	
+	

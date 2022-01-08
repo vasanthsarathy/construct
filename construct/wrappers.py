@@ -1,7 +1,7 @@
 import gym
 import pddlgym.structs as pgym
 import pyperplan.pddl.pddl as pyper
-
+import collections
 
 """
 Bunch of wrappers useful to convert between PDDLGym and other representations
@@ -55,6 +55,7 @@ class PyperWrapper(gym.Wrapper):
     def reset(self, **kwargs):
         obs = self.env.reset(**kwargs)
         self.current_state = obs
+        self.type_keyed_objects, self.token_keyed_objects = self._get_objects() # objects from current state
         return self.observe()
 
     def observe(self, source='pypertask'):
@@ -82,12 +83,140 @@ class PyperWrapper(gym.Wrapper):
 
 
     def step(self,action):
+        action = self._ground_literal(action) #Allows me to provide lifted actions
         action_pddlgym = self._action_pyper_to_pddlgym(action)
         next_state = self.env.step(action_pddlgym)
         self.history.append(action)
         self.current_state = next_state
 
         return self.observe()
+
+##############
+
+
+    def _ground_literal(self, literal):
+        """
+        returns a literal grounded in either objects the agent knows about OR is hypothesized
+        """
+        if self._is_grounded_literal(literal):
+            return literal
+
+        name, args = self._parse_literal(literal)
+        grounded_args = []
+        for arg in args:
+            grounded_arg = self._ground_arg(arg)
+            grounded_args.append(grounded_arg)
+
+        return self._construct_literal(name, grounded_args)
+
+
+    def _construct_literal(self, name, args):
+        """
+        Returns a literal based on name and args
+        (have t23)
+        """
+        return f"({name} {' '.join(args)})"
+
+
+    def _ground_arg(self, arg):
+        """
+        Returns a grounded arg
+        NOTE: if the object is hypothetical, this is added via self.add_objects()
+        """
+        if self._is_grounded_arg(arg):
+            return arg
+        symbol, typing = self._parse_arg(arg)
+        if self.type_keyed_objects[typing]:
+            symbol = list(self.type_keyed_objects[typing])[0]
+            return symbol
+        breakpoint()
+        raise ValueError("Not allowed to hypothesize objects here")
+        return None
+
+
+    def _parse_arg(self, arg):
+        """
+        Returns symbol, typing
+        input: ?x-t, t23-t, t23, *t234-t
+        output: ?x,t  or t23,t or t23,t or *t234-t
+        """
+
+        if "?" in arg:
+            if "-" in arg:
+                symbol = arg.split("-")[0]
+                typing = arg.split("-")[1]
+                return symbol, typing
+            else:
+                raise ValueError(f"Argument ({arg}) Must have at least constant or type")
+        if "-" in arg:
+            symbol = arg.split("-")[0]
+            typing = arg.split("-")[1]
+            return symbol, typing
+
+        symbol = arg
+        try:
+            typing = self.token_keyed_objects[symbol]
+            return symbol, typing
+        except:
+            raise ValueError(f"The object {arg} does not exist anywhere")
+
+
+    def _is_grounded_literal(self, literal):
+        """
+        Returns true of literal is grounded
+        """
+
+        name, args = self._parse_literal(literal)
+        for arg in args:
+            if not self._is_grounded_arg(arg):
+                return False
+        return True
+
+
+    def _parse_literal(self, literal):
+        """
+        Gets name, and arguments from a string literal as a string, list
+        note: an arg could be "t23" or "?x-t" or "t23-t", assuming well formed.
+        """
+
+        name = literal.replace("(","").replace(")","").split(" ")[0]
+        args = literal.replace("(","").replace(")","").split(" ")[1:]
+        return name, args
+
+    def _is_grounded_arg(self, arg):
+        """
+        Given an arg, checks if it is grounded
+        arg = "?x-t" or "t23" or "t23-t" or "*t234"
+        """
+
+        if "?" in arg:
+            return False
+        return True
+
+
+    def _get_objects(self):
+        """
+        Returns objects as a dicts, keyed by types, keyed by object
+        """
+
+        type_keyed_objects = collections.defaultdict(set)
+        token_keyed_objects = collections.defaultdict()
+        objects_dict = self.objects() ###*** LOOKS AT ENV ***********
+
+        for k, v in objects_dict.items():
+            type_keyed_objects[v.name].add(k)
+            token_keyed_objects[k] = v.name
+
+        return type_keyed_objects, token_keyed_objects
+
+
+
+
+###########
+
+
+
+
 
     def get_history(self):
         return self.history

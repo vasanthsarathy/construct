@@ -39,7 +39,7 @@ def cli(ctx, **kwargs):
 @click.option('--agent', default="biplex", type=click.Choice(["random", "biplex"]), help="Choose agent")
 @click.option('--env', default="PDDLEnvTreasure-v0", type=click.Choice(["PDDLEnvPolycraft-v0", "PDDLEnvTreasure-v0"]), help="Choose pddlgym environment")
 @click.option('--bias', default="agents/biplex/bias/treasure.pddl", help="Agent's domain bias file location")
-@click.option('--trees', default="agents/biplex/trees/trees01.json", help="Agent's resource tree knowledge")
+@click.option('--resource_graph', default="agents/biplex/bias/crafting_knowledge.gml", help="Agent's resource graph knowledge")
 @click.option('--goal', default="(have ?x-p)", help="Select goal for the agent")
 @click_config_file.configuration_option(cmd_name='construct', config_file_name=os.path.join(ROOT_DIR, 'config/config_default.yml'))
 @click.pass_context
@@ -52,7 +52,7 @@ def run(ctx, **kwargs):
 
     exp = Experiment(ctx=ctx.obj)
     exp.run_one()
-    exp.show_results()
+    # exp.show_results()
 
 
 cli.add_command(run)

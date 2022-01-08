@@ -29,4 +29,14 @@
     :parameters (?x - object ?y - b)
     :precondition (and (in ?x ?y) (at ?y) (opened ?y))
     :effect (and (inworld ?x)))
+
+	(:action *craftk
+		:parameters (?y - k)
+        :precondition (and)
+		:effect (have ?y))
+
+    (:action *craftt
+		:parameters (?y - t)
+        :precondition (and)
+		:effect (have ?y))
 )
