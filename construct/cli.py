@@ -41,6 +41,8 @@ def cli(ctx, **kwargs):
 @click.option('--bias', default="agents/biplex/bias/treasure.pddl", help="Agent's domain bias file location")
 @click.option('--resource_graph', default="agents/biplex/bias/crafting_knowledge.gml", help="Agent's resource graph knowledge")
 @click.option('--goal', default="(have ?x-p)", help="Select goal for the agent")
+@click.option('--planner', default="ff", help="Select agent's planner")
+@click.option('--problem', default=0, help="Select problem number. Tied to env.")
 @click_config_file.configuration_option(cmd_name='construct', config_file_name=os.path.join(ROOT_DIR, 'config/config_default.yml'))
 @click.pass_context
 def run(ctx, **kwargs):
@@ -62,4 +64,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

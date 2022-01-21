@@ -30,13 +30,13 @@
     :precondition (and (in ?x ?y) (at ?y) (opened ?y))
     :effect (and (inworld ?x)))
 
-	(:action *craftk
+	(:action hyp_craftk
 		:parameters (?y - k)
         :precondition (and)
 		:effect (have ?y))
 
-    (:action *craftt
-		:parameters (?y - t)
-        :precondition (and)
+    (:action hyp_craftt
+		:parameters (?y - t ?loc - r)
+        :precondition (and (at ?loc))
 		:effect (have ?y))
 )

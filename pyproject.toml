@@ -17,6 +17,7 @@ ipykernel = "^6.6.0"
 pynvim = "^0.4.3"
 click-config-file = "^0.6.0"
 pyperplan = "^2.0"
+pexpect = "^4.8.0"
 pddlgym = {path = "../pddlgym"}
 
 [tool.poetry.dev-dependencies]

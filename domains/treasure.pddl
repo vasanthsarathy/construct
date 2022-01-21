@@ -30,8 +30,16 @@
     :precondition (and (in ?x ?y) (at ?y) (opened ?y))
     :effect (and (inworld ?x)))
 
-	(:action craftt
-		:parameters (?y958 - t ?xa5a - k ?x305 - s ?loce7b - r)
-		:precondition (and (have ?xa5a) (have ?x305) (at ?loce7b))
-		:effect (and (not (have ?xa5a)) (not (have ?x305)) (have ?y958)))
+    (:action craftk
+    :parameters (?x - k ?y - p ?z - q)
+    :precondition (and (have ?y) (have ?z))
+    :effect (and (have ?x) (not (have ?y)) (not (have ?z)))
+    )
+
+    (:action craftt
+    :parameters (?x - t ?y - k ?z - s)
+    :precondition (and (have ?y) (have ?z))
+    :effect (and (have ?x) (not (have ?y)) (not (have ?z)))
+    )
+
 )

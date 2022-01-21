@@ -2,6 +2,8 @@ from agents.agent import Agent
 import pddlgym
 import networkx as nx
 from construct.wrappers import PyperWrapper
+from construct.planners.pyperplanner import PyperPlanner
+from construct.planners.ffplanner import FFPlanner
 from pyperplan.pddl.pddl import Type, Problem, Predicate
 from pyperplan.pddl.parser import Parser
 from pyperplan.planner import _ground, _search, _parse
@@ -18,6 +20,8 @@ import click
 import collections
 # UPDATED to produce problem.pddl files instead of dealing with generating predicates etc.
 
+HYP_SYMBOL = "hyp_"
+
 
 class BiplexAgent(Agent):
     """
@@ -28,7 +32,10 @@ class BiplexAgent(Agent):
         super().__init__()
         self.config = ctx
         self.env = PyperWrapper(pddlgym.make(self.config['env']))
-        self.env.fix_problem_index(1)
+        try:
+            self.env.fix_problem_index(int(self.config['problem']))
+        except:
+            raise ValueError(f"Problem number {self.config['problem']} does not exist")
         self.env.reset()
         self.goal = self.config['goal']
         self.closed = []
@@ -39,6 +46,13 @@ class BiplexAgent(Agent):
         self.goals = [self.goal]
         self.completed = []
         self.grounded_actions = []
+
+        if self.config['planner'] == 'ff':
+            self.planner = FFPlanner(self.config)
+        elif self.config['planner'] == 'pyper':
+            self.planner = PyperPlanner(self.config)
+        else:
+            raise ValueError("Could not initialize planner. Check the name. Should be FF or pyper")
         print("🍁 Biplex agent initialized.\n")
 
     def add_objects(self, constant, typing):
@@ -69,12 +83,16 @@ class BiplexAgent(Agent):
         """
 
         click.secho(f"Goal: {self.goal}", fg='blue')
+        click.secho(f"Difficulty level: {self.config['problem']}")
 
         # Initial planning and execution with Stripped Domain File
         status, s1 = self.sketch()
         if status:
-            print(f"Completed subgoals: {self.completed}")
-            print("Solved")
+            click.secho("\nSummary", bold=True)
+            click.secho("=========", bold=True)
+            print("Result:\tSolved.")
+            print(f"Completed subgoals:\n \t{self.completed}")
+            print(f"Action replay:\n \t{' --> '.join(self.env.history)}\n")
             return status, s1
         return False, s1
 
@@ -84,24 +102,18 @@ class BiplexAgent(Agent):
         High-level planner operating on the stripped domain
         The stripped domain has all the craft actions, but stripped down to zero precons
         """
-        print("----------------")
-        print(f"\t\tCOMPLETED: {self.completed}")
-        print(f"Objects: {self._get_objects_from_dicts()}")
-        print(f"GOALS PENDING: {self.goals}")
         goal_in = self.goals.pop(0)
 
         s0 = self.env.observe() # Getting current state
 
         # We now use the non-executable domain file
-        non_exec_domain_file = "agents/biplex/bias/treasure_nonexec.pddl"
+        self.non_exec_domain_file = "agents/biplex/bias/treasure_nonexec.pddl"
         plan = []
         executable = False
 
         # --- Preparing problem file ------ #
         # Ground the goal
-        print(f"Goal in: {goal_in}")
         goal = self._ground_literal(goal_in)
-        print(f"Current goal: {goal}")
 
         if goal in s0:
             self.completed.append(goal)
@@ -110,17 +122,17 @@ class BiplexAgent(Agent):
         if goal in self.completed:
             return True, s0
 
+        click.secho(f"Subgoal: {goal}", fg="bright_white", bold=True)
         #We need to add objects from the craft actions
         # Look over nonexec domain and add objects from effects
         # we need to do this so it can come up with a plan for (have ?x-s)
-        # TODO: Should this only run once? Not sure. Need to test
-        parser = Parser(non_exec_domain_file)
+        parser = Parser(self.non_exec_domain_file)
         domain = parser.parse_domain()
         for name, action in domain.actions.items():
-            if "*" in name:
+            if HYP_SYMBOL in name:
                 sig = action.signature
-                if len(sig) > 1:
-                    raise NotImplementedError(f"Cannot handle case where action has more than one param")
+                # if len(sig) > 1:
+                    # raise NotImplementedError(f"Cannot handle case where action has more than one param")
                 typings = sig[0][1]
                 if len(typings) > 1:
                     raise NotImplementedError(f"Cannot handle if object variable {sig[0]} has more than one type")
@@ -131,9 +143,10 @@ class BiplexAgent(Agent):
         objects = self._get_objects_from_dicts()
         init = set(self.env.observe())
         temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
-        plan = self.plan(problem_file=temp_problem_file, domain_file=non_exec_domain_file)
+        # plan = self.plan(problem_file=temp_problem_file, domain_file=non_exec_domain_file)
+        plan = self.planner.plan(domain_file=self.non_exec_domain_file,problem_file=temp_problem_file)
         executable, non_executables = self._is_plan_executable(plan)
-        print(f"Nonexc: {non_executables}")
+        print(f"\tNonexc: {non_executables}")
         if plan and executable:
             print(f"\tThis is an executable plan")
             self.completed.append(goal)
@@ -148,19 +161,19 @@ class BiplexAgent(Agent):
             objects_to_construct = set()
             # This means there are either non-executable actions or hypothetical actions
             for non_exec_action in non_executables:
-                name, args = self._parse_literal(non_exec_action.name)
+                name, args = self._parse_literal(non_exec_action)   #ALERT changed from non_exec_action.name
                 for arg in args:
-                    if "*" in arg:
+                    if HYP_SYMBOL in arg:
                         if arg in self.bound_objects:## if already bound, then domain_file
                             continue
                         objects_to_construct.add(arg)
 
             for ob in objects_to_construct:
-                print("here")
-                status, s1 = self.prove(self.token_keyed_objects[ob])
-                if not status:
-                    print(f"Unable to construct object {ob}")
-                    return False, s1
+                if ob in self.token_keyed_objects:
+                    status, s1 = self.prove(self.token_keyed_objects[ob])
+                    if not status:
+                        print(f"Unable to construct object {ob}")
+                        return False, s1
             return True, s1
 
 
@@ -210,7 +223,7 @@ class BiplexAgent(Agent):
         if self.type_keyed_objects[typing]:
             symbol = list(self.type_keyed_objects[typing])[0]
             return symbol
-        hypo_sym = f"*{typing}_{str(uuid.uuid4())[:8]}"
+        hypo_sym = f"{HYP_SYMBOL}{typing}_{str(uuid.uuid4())[:8]}"
         self.add_objects(hypo_sym, typing)
         return hypo_sym
 
@@ -319,9 +332,7 @@ class BiplexAgent(Agent):
     def ground(self, anode):
         # Node expansion
         precon_types = list(self.kg.predecessors(str(anode)))
-        print(f"Precon types: {precon_types}")
         for tnode in precon_types:
-            print(f"ADDING: {tnode} as goal")
             self.goals.insert(0, f"(have ?x-{tnode})")
             status, s1 = self.sketch()
             if not status:
@@ -336,22 +347,21 @@ class BiplexAgent(Agent):
             goal = f"(have ?x-{list(self.kg.successors(anode))[0]})"
             status, s1 = self.plan_execute(goal=goal, domain_file=new_domain_file)
             if status:
-                print(f"ADDING: {goal} as goal")
                 self.goals.insert(0,self.goal)
                 return self.sketch()
             return False, s1
         return True, self.env.observe()
 
 
-    # Full fledged planning. Use carefully
-    def plan(self, problem_file, domain_file):
-        problem = _parse(domain_file, problem_file)
-        task = _ground(problem)
-        print(f"\tDomain: {domain_file}")
-        print("\t*Planning*", end="\r")
-        solution = breadth_first_search(task)
-        print(f"\tPlan: {solution}")
-        return solution
+#    # Full fledged planning. Use carefully
+#    def plan(self, problem_file, domain_file):
+#        problem = _parse(domain_file, problem_file)
+#        task = _ground(problem)
+#        print(f"\tDomain: {domain_file}")
+#        print("\t*Planning*", end="\r")
+#        solution = breadth_first_search(task)
+#        click.secho(f"\tPlan: {solution}", fg="green")
+#        return solution
 
 
     def execute(self, plan):
@@ -359,8 +369,8 @@ class BiplexAgent(Agent):
         if plan:
             print(f"\tExecuting actions:")
             for idx,a in enumerate(plan):
-                click.secho(f"\t\t[{idx}] {a.name}", fg='red')  # need a.name here because these are Operators
-                s1 = self.env.step(a.name)
+                click.secho(f"\t\t[{idx}] {a}", fg='red')  #ALERT changed from a.name
+                s1 = self.env.step(a) #ALERT changed from a.name
             return True, s1
         print("\tNo plan found")
         return False, s0
@@ -370,16 +380,17 @@ class BiplexAgent(Agent):
         objects = self._get_objects_from_dicts()
         init = set(self.env.observe())
         temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
-        plan = self.plan(problem_file=temp_problem_file, domain_file=domain_file)
+        # plan = self.plan(problem_file=temp_problem_file, domain_file=domain_file)
+        plan = self.planner.plan(domain_file=domain_file,problem_file=temp_problem_file)
 
         # Replace any args that have "*" with ?x-k
         new_plan = []
         to_remove = []
         for op in plan:
-            name, args = self._parse_literal(op.name)
+            name, args = self._parse_literal(op) #ALERT changed from op.name
             new_args = []
             for arg in args:
-                if "*" in arg:
+                if HYP_SYMBOL in arg:
                     # replace it with a ?x-type
                     to_remove.append(arg)
                     typing = self.token_keyed_objects[arg]
@@ -456,7 +467,7 @@ class BiplexAgent(Agent):
         if not plan:
             return False, []
         for action in plan:
-            if "*" in action.name:  #actually this is an Operator in Pyperplan representation
+            if HYP_SYMBOL in action:  #ALERT changed from action.name
                 flag = False
                 nonexec_actions.append(action)
         if flag:
@@ -464,183 +475,14 @@ class BiplexAgent(Agent):
         return False, nonexec_actions
 
 
-
-
-
-
-
-
-
-
-######################3
-###################################################3
-###+============================
-
-    def _get_arg_types_for_lit(self, grounded_literal):
-        if not self._is_lit_grounded(grounded_literal):
-            return None
-        args = literal.replace("(","").replace(")","").split(" ")
-        for arg in args:
-            type_object
-        pass
-
-
-
-        # TODO: some code repetition here with plan_execute(). Fix
-        goal = self._ground_goal(goal_in)
-        objects = self._get_objects_from_current_state(scope="state", domain_file=domain_file)
-
-
-        # add the object from the goal
-        goal_object = goal.replace("(","").replace(")","").split(" ")[1]
-        goal_type = self.goal.replace("(","").replace(")","").split(" ")[1].split("-")[1]
-        objects.add(f"{goal_object} - {goal_type}")
-        objects = list(objects)
-
-
-        init = set(self.env.observe())
-        temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
-        plan = self.plan(problem_file=temp_problem_file, domain_file=non_exec_domain_file)
-        executable = self._is_executable(plan)
-        if plan and executable:
-            print(f"\tThis is an executable plan")
-            return self.execute(plan)
-
-        # Now either there is no plan, or it is not executable
-        n = 0
-        subgoals = []
-        while not plan or not executable:
-            if not plan:
-                print("\tNo plan sketch. need to try again")
-                n += 1
-                # Expand on the number of objects -- WE MUST GENERATE A PLAN SKETCH
-                objects = self._get_objects_from_current_state(scope="domain")
-                temp_problem_file = self._generate_temp_problem_file(goal, init, objects)
-                plan = self.plan(problem_file=temp_problem_file, domain_file=non_exec_domain_file)
-                executable = self._is_executable(plan)
-                continue
-            if executable:
-                # execute
-                return self.execute(plan)
-
-            # there is a plan and it is not executable
-            # Prove each of the craft nodes
-            for a in plan:
-                if '*' in a.name:
-                    goal = self._generate_goal_from_action(a)
-                    tnode = self._get_goal_object_type(goal)
-                    print(f"Tnode: {tnode}")
-                    status, s1 = self.prove(tnode)
-                    if not status:
-                        subgoals.append(goal)
-
-            for s in subgoals:
-                status, s1 = self.prove(s)
-                return status, s1
-
-    def _generate_goal_from_action(self, action):
-        """
-        Given action (craftt tqw)
-        """
-        # get the name of the action
-        name = action.name.replace("*","").replace("(","").replace(")","").split(" ")[0]
-        output = list(self.kg.successors(name))[0]
-        return f"(have ?x-{str(output)})"
-
-
-    def _get_objects_from_current_state(self, scope, domain_file=None):
-        """
-        scope = "state" or "have" or "action"
-        "state": those objects in current state (appearing in any literal)
-        "have": subset of 'state' objects appear in "have" or "inworld" literals.
-        "domain": 1 object of every type mentioned in the domain file.
-        """
-
-        type_keyed_objects = collections.defaultdict(set)
-        objects = []
-        objects_have = []
-
-        state = self.env.observe()
-        relevant_objects = set()
-        limited_objects = set()
-        for literal in state:
-            objects_in_lit = literal.replace("(","").replace(")","").split(" ")[1:]
-            relevant_objects.update(objects_in_lit)
-            if "have" in literal or "inworld" in literal:
-                limited_objects.update(objects_in_lit)
-        for o in relevant_objects:
-            type_val = self.env.objects()[o]
-            type_keyed_objects[str(type_val)].add(o)
-            objects.append(f"{str(o)} - {str(type_val)}")
-        for o in limited_objects:
-            type_val = self.env.objects()[o]
-            objects_have.append(f"{str(o)} - {str(type_val)}")
-
-        # type_keyed_objects is a useful dict that contains object constants tied to
-        # We can now add to this
-
-        if scope == "have": # those objects that are in "have" or "inworld" predicates
-            return set(objects_have)
-        if scope == "state":
-            return set(objects)
-        if scope == "domain":
-            if not domain_file:
-                raise Error("No domain file!!")
-            type_keyed_objects_domain = copy.deepcopy(type_keyed_objects)
-            parser = Parser(domain_file)
-            domain = parser.parse_domain()
-            all_types = [x for x in list(domain.types.keys()) if "object" not in x]
-            print(f">>> all : {all_types}")
-            for t in all_types:
-                if t not in type_keyed_objects_domain:
-                    # now we need to "look" to find an object
-                    ob,_ = self._find(t)
-                    print(ob)
-                    type_keyed_objects_domain[t].add(ob)
-
-            for key, value in type_keyed_objects_domain.items():
-                objects_of_type = [f"{x} - {key}" for x in value]
-                objects.extend(objects_of_type)
-            print(set(objects))
-            return set(objects)
-
-
-            raise NotImplementedError("scope='domain' is not yet implemented.")
-        raise ValueError("Improper value provided to scope argument.")
-
-
-        status, s1 = self.plan_execute(goal_in=self.goal, domain_file=non_exec_domain_file, execute=False, fast_mode=False)
-
-        # It's now a resource acquisition problem
-        tnode = self._get_goal_object_type(self.goal)
-        # s0 = s1
-        status, s1 = self.prove(tnode)
-
-        print(f"\nHistory: {self.env.get_history()}")
-
-        return {'plan':[], 'final_state':s1, "status":False}
-
-
-#        ################
-#        if fast_mode:
-#            goal_entry = f"{goal_object} - {goal_type}"
-#            if goal_entry not in set_objs:
-#                # must be constructed since not anywhere in state
-#                return False, s0
-#            if goal_entry not in set_objs_have:
-#                # is available somewhere in the state, but not readily useable
-#                # might need to focus on acquiring some other resource and return to this
-#                # return False, s0
-#                pass
-#        ####################
-
-
-    def _create_new_domain_file(self, graph, anode, current_domain):
+    def _create_new_domain_file(self, graph, anode, bare_domain):
         action_symbol = f"\t(:action {anode}\n"
         precon_types = list(graph.predecessors(str(anode)))
         precons = []
         effects = []
         params = []
+
+        # Add precons and effects from the graph
         for p in precon_types:
             variable = "?x"+str(uuid.uuid4())[:3]
             param = f"{variable} - {p}"
@@ -658,6 +500,31 @@ class BiplexAgent(Agent):
             effects.append(effp)
             params.insert(0,param)
 
+        # add any precons from non_exec_domain_file (these are things like (at ?x-r)
+        # Lots of pyperplan parsing
+        # we are iterating through the non_exec_domain_file
+        parser = Parser(self.non_exec_domain_file)
+        domain = parser.parse_domain()
+        for name, action in domain.actions.items():
+            if name.replace(HYP_SYMBOL, "") == anode:
+                for precon_predicate in action.precondition:
+                    original_variables = [x[0] for x in precon_predicate.signature]
+                    variable_types = []
+                    for ov in original_variables:
+                        for arg in action.signature:
+                            if arg[0] == ov:
+                                variable_types.append(arg[1][0].name)
+                    new_variables = [x+str(uuid.uuid4())[:3] for x in original_variables]
+                    new_params = [f"{v} - {t}" for (v, t) in zip(new_variables, variable_types)]
+                    params.extend(new_params)
+                    pred = f"({precon_predicate.name} {' '.join(new_variables)})"
+                    precons.append(pred)
+
+        # TODO: Adding stuff from Effects
+        # the above piece was for adding PRECONS in craft actions (things like at(location)
+        # We also need to add something for side effects. Other effects.
+        # Not as simple as copying and pasting from above because we would need to not add stuff already there.
+
         param_line = f"\t\t:parameters ({' '.join(params)})\n"
         precon_line = f"\t\t:precondition (and {' '.join(precons)})\n"
         effects_line = f"\t\t:effect (and {' '.join(effects)}))"
@@ -665,8 +532,8 @@ class BiplexAgent(Agent):
         action_entry = action_symbol+param_line+precon_line+effects_line
 
 
-        new_domain_filename = current_domain.split(".pddl")[0]+"_gen.pddl"
-        with open(current_domain,'r') as current, open(new_domain_filename,'w') as secondfile:
+        new_domain_filename = bare_domain.split(".pddl")[0]+"_gen.pddl"
+        with open(bare_domain,'r') as current, open(new_domain_filename,'w') as secondfile:
             lines = current.readlines()
             for line in lines[:-1]:
                 secondfile.write(line)
@@ -680,87 +547,5 @@ class BiplexAgent(Agent):
 
 
 
-    def _get_goal_object_type(self, goal):
-        name = goal.replace("(","").replace(")","").split(" ")[0]
-        args = goal.replace("(","").replace(")","").split(" ")[1:]
 
-        # considering only one arg
-        arg = args[0]
-        if "?" in arg:
-            if "-" in arg:
-                typing = arg.split("-")[1]
-                return typing
-            else:
-                raise ValueError("Must provide at least one of constant or a type")
-        else:
-            raise NotImplementedError("Need to implement a failed planning attempt on a grounded goal")
-
-        return None
-
-
-    def _ground_goal(self, atom_str):
-        """
-        Given an atom (have ?x-t) or (have t23) or (on ?x-t y24-y)  or (have ?t34-t)
-        Return (have t23)
-        """
-        name = atom_str.replace("(","").replace(")","").split(" ")[0]
-        args = atom_str.replace("(","").replace(")","").split(" ")[1:]
-        new_args = []
-        for arg in args:
-            if "?" in arg:
-                if "-" in arg:
-                    typing = arg.split("-")[1]
-                    new_sym, exists = self._find(typing)  #Find or look method.
-                    if exists:
-                        new_args.append(f"{new_sym}")
-                    else:
-                        return None
-                else:
-                    raise ValueError("Must provide at least one of constant or a type")
-            else:
-                if "-" in arg:
-                    new_arg = arg.split("-")[0]
-                    new_args.append(new_arg)
-                else:
-                    new_args.append(arg)
-        new_atom = "("+name+" "+" ".join(new_args)+")"
-        return new_atom
-
-
-
-
-    def _find(self, object_type):
-        """
-        POTENTIAL ENV-AGENT INTERFACE BREACH WARNING: This method accesses self.env.objects( )
-        Given an object type, returns an object identifier of that type in the world.
-        Returns symbol, True if found. Returns hyposymbol, False if none
-
-        This is meant to simulate the agent's vision system.
-        We could imagine searching for it differently
-        """
-        print(f"\tLooking for object of type {object_type} in the world...")
-        # Organize all the objects in the world as a dict  keyed by types
-        objs = self.env.objects()  # CHANGE TO SELF.ENV
-        type_keyed_objs = {}
-        for k,v in objs.items():
-            type_keyed_objs[v.name]= type_keyed_objs.get(v.name,[])
-            type_keyed_objs[v.name].append(k)
-
-        if object_type in type_keyed_objs:
-            new_sym = random.choice(type_keyed_objs[object_type])
-            print(f"\tObject {new_sym} of type {object_type} found")
-            return new_sym, True
-
-        hypo_sym = f"{object_type}_{str(uuid.uuid4())[:8]}"
-        print(f"\tCould not find object of type {object_type}. Gensym: {hypo_sym}")
-        return hypo_sym, False
-
-
-
-
-
-    def _parse_trees_file(self, trees_file):
-        trees = []
-        # TODO: load file, generate a list of networkx trees
-        return trees
 

@@ -1,4 +1,4 @@
-# Casper Backtracking pseudoCode
+# BIPLEX Backtracking pseudoCode
 
 # goal: a TypeNode 
 # we have TypeNodes and ActionNodes

@@ -1,0 +1,4195 @@
+%!PS-Adobe-3.0
+%%Title: agents/biplex/biplexagent.py
+%%For: vsarathy
+%%Creator: NVIM v0.4.3
+%%CreationDate: Sat Jan  8 14:09:35 2022
+%%DocumentData: Clean8Bit
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%BoundingBox: 59 49 564 800
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-Oblique
+%%+ font Courier-BoldOblique
+%%DocumentSuppliedResources: procset VIM-Prolog 1.4 1
+%%+ encoding VIM-latin1 1.0 0
+%%Requirements: duplex collate color
+%%EndComments
+%%BeginDefaults
+%%PageResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-Oblique
+%%+ font Courier-BoldOblique
+%%PageMedia: A4
+%%EndDefaults
+%%BeginProlog
+%%BeginResource: procset VIM-Prolog
+%%BeginDocument: /usr/share/nvim/runtime/print/prolog.ps
+%!PS-Adobe-3.0 Resource-ProcSet
+%%Title: VIM-Prolog
+%%Version: 1.4 1
+%%EndComments
+% Editing of this file is NOT RECOMMENDED.  You run a very good risk of causing
+% all PostScript printing from VIM failing if you do.  PostScript is not called
+% a write-only language for nothing!
+/packedarray where not{userdict begin/setpacking/pop load def/currentpacking
+false def end}{pop}ifelse/CP currentpacking def true setpacking
+/bd{bind def}bind def/ld{load def}bd/ed{exch def}bd/d/def ld
+/db{dict begin}bd/cde{currentdict end}bd
+/T true d/F false d
+/SO null d/sv{/SO save d}bd/re{SO restore}bd
+/L2 systemdict/languagelevel 2 copy known{get exec}{pop pop 1}ifelse 2 ge d
+/m/moveto ld/s/show ld /ms{m s}bd /g/setgray ld/r/setrgbcolor ld/sp{showpage}bd
+/gs/gsave ld/gr/grestore ld/cp/currentpoint ld
+/ul{gs UW setlinewidth cp UO add 2 copy newpath m 3 1 roll add exch lineto
+stroke gr}bd
+/bg{gs r cp BO add 4 -2 roll rectfill gr}bd
+/sl{90 rotate 0 exch translate}bd
+L2{
+/sspd{mark exch{setpagedevice}stopped cleartomark}bd
+/nc{1 db/NumCopies ed cde sspd}bd
+/sps{3 db/Orientation ed[3 1 roll]/PageSize ed/ImagingBBox null d cde sspd}bd
+/dt{2 db/Tumble ed/Duplex ed cde sspd}bd
+/c{1 db/Collate ed cde sspd}bd
+}{
+/nc{/#copies ed}bd
+/sps{statusdict/setpage get exec}bd
+/dt{statusdict/settumble 2 copy known{get exec}{pop pop pop}ifelse
+statusdict/setduplexmode 2 copy known{get exec}{pop pop pop}ifelse}bd
+/c{pop}bd
+}ifelse
+/ffs{findfont exch scalefont d}bd/sf{setfont}bd
+/ref{1 db findfont dup maxlength dict/NFD ed{exch dup/FID ne{exch NFD 3 1 roll
+put}{pop pop}ifelse}forall/Encoding findresource dup length 256 eq{NFD/Encoding
+3 -1 roll put}{pop}ifelse NFD dup/FontType get 3 ne{/CharStrings}{/CharProcs}
+ifelse 2 copy known{2 copy get dup maxlength dict copy[/questiondown/space]{2
+copy known{2 copy get 2 index/.notdef 3 -1 roll put pop exit}if pop}forall put
+}{pop pop}ifelse dup NFD/FontName 3 -1 roll put NFD definefont pop end}bd
+CP setpacking
+(\004)cvn{}bd
+% vim:ff=unix:
+%%EOF
+%%EndDocument
+%%EndResource
+%%BeginResource: encoding VIM-latin1
+%%BeginDocument: /usr/share/nvim/runtime/print/latin1.ps
+%!PS-Adobe-3.0 Resource-Encoding
+%%Title: VIM-latin1
+%%Version: 1.0 0
+%%EndComments
+/VIM-latin1[
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quotesingle
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash
+/zero /one /two /three /four /five /six /seven
+/eight /nine /colon /semicolon /less /equal /greater /question
+/at /A /B /C /D /E /F /G
+/H /I /J /K /L /M /N /O
+/P /Q /R /S /T /U /V /W
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+/grave /a /b /c /d /e /f /g
+/h /i /j /k /l /m /n /o
+/p /q /r /s /t /u /v /w
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis]
+/Encoding defineresource pop
+% vim:ff=unix:
+%%EOF
+%%EndDocument
+%%EndResource
+%%EndProlog
+%%BeginSetup
+595 842 0 sps
+1 nc
+T F dt
+T c
+%%IncludeResource: font Courier
+/_F0 /VIM-latin1 /Courier ref
+/F0 10 /_F0 ffs
+%%IncludeResource: font Courier-Bold
+/_F1 /VIM-latin1 /Courier-Bold ref
+/F1 10 /_F1 ffs
+%%IncludeResource: font Courier-Oblique
+/_F2 /VIM-latin1 /Courier-Oblique ref
+/F2 10 /_F2 ffs
+%%IncludeResource: font Courier-BoldOblique
+/_F3 /VIM-latin1 /Courier-BoldOblique ref
+/F3 10 /_F3 ffs
+/UO -1 d
+/UW 0.5 d
+/BO -2.5 d
+%%EndSetup
+%%Page: 1 1
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 1)59.5 792.4 ms
+F0 sf
+0.376 0 0.376 r
+(from)59.5 772.4 ms
+0 g
+( agents.agent )s
+0.376 0 0.376 r
+(import)s
+0 g
+( Agent)s
+0.376 0 0.376 r
+(import)59.5 762.4 ms
+0 g
+( pddlgym)s
+0.376 0 0.376 r
+(import)59.5 752.4 ms
+0 g
+( networkx )s
+0.376 0 0.376 r
+(as)s
+0 g
+( nx)s
+0.376 0 0.376 r
+(from)59.5 742.4 ms
+0 g
+( construct.wrappers )s
+0.376 0 0.376 r
+(import)s
+0 g
+( PyperWrapper)s
+0.376 0 0.376 r
+(from)59.5 732.4 ms
+0 g
+( pyperplan.pddl.pddl )s
+0.376 0 0.376 r
+(import)s
+0 g
+( Type, Problem, Predicate)s
+0.376 0 0.376 r
+(from)59.5 722.4 ms
+0 g
+( pyperplan.pddl.parser )s
+0.376 0 0.376 r
+(import)s
+0 g
+( Parser)s
+0.376 0 0.376 r
+(from)59.5 712.4 ms
+0 g
+( pyperplan.planner )s
+0.376 0 0.376 r
+(import)s
+0 g
+( _ground, _search, _parse)s
+0.376 0 0.376 r
+(from)59.5 702.4 ms
+0 g
+( pyperplan.grounding )s
+0.376 0 0.376 r
+(import)s
+0 g
+( ground)s
+0.376 0 0.376 r
+(from)59.5 692.4 ms
+0 g
+( pyperplan.search.breadth_first_search )s
+0.376 0 0.376 r
+(import)s
+0 g
+( breadth_first_search)s
+0.376 0 0.376 r
+(from)59.5 682.4 ms
+0 g
+( pyperplan.search.a_star )s
+0.376 0 0.376 r
+(import)s
+0 g
+( astar_search)s
+0.376 0 0.376 r
+(from)59.5 672.4 ms
+0 g
+( pyperplan.search.a_star )s
+0.376 0 0.376 r
+(import)s
+0 g
+( greedy_best_first_search)s
+0.376 0 0.376 r
+(from)59.5 662.4 ms
+0 g
+( pyperplan.search.iterative_deepening_search )s
+0.376 0 0.376 r
+(import)s
+0 g
+( iterative_deepening_search)s
+0.376 0 0.376 r
+(import)59.5 652.4 ms
+0 g
+( random)s
+0.376 0 0.376 r
+(import)59.5 642.4 ms
+0 g
+( uuid)s
+0.376 0 0.376 r
+(import)59.5 632.4 ms
+0 g
+( copy)s
+0.376 0 0.376 r
+(import)59.5 622.4 ms
+0 g
+( networkx )s
+0.376 0 0.376 r
+(as)s
+0 g
+( nx)s
+0.376 0 0.376 r
+(import)59.5 612.4 ms
+0 g
+( click)s
+0.376 0 0.376 r
+(import)59.5 602.4 ms
+0 g
+( collections)s
+0.376 0 0.376 r
+(# UPDATED to produce problem.pddl files instead of dealing with generating predicate)59.5 592.4 ms
+(s etc.)59.5 582.4 ms
+(class)59.5 552.4 ms
+0 g
+( )s
+0.376 0 0 r
+(BiplexAgent)s
+0 g
+(\(Agent\):)s
+(    )59.5 542.4 ms
+0.376 0 0 r
+(""")s
+(    Biplex)59.5 532.4 ms
+(    """)59.5 522.4 ms
+0 g
+(    )59.5 502.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(__init__)s
+0 g
+(\(self, ctx\):)s
+(        )59.5 492.4 ms
+0 0 0.376 r
+(super)s
+0 g
+(\(\).)s
+0 0 0.376 r
+(__init__)s
+0 g
+(\(\))s
+(        self.config )59.5 482.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( ctx)s
+(        self.env )59.5 472.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(PyperWrapper)s
+0 g
+(\(pddlgym.)s
+0 0 0.376 r
+(make)s
+0 g
+(\(self.config[)s
+0.376 0 0 r
+('env')s
+0 g
+(]\)\))s
+(        self.env.)59.5 462.4 ms
+0 0 0.376 r
+(fix_problem_index)s
+0 g
+(\()s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(\))s
+(        self.env.)59.5 452.4 ms
+0 0 0.376 r
+(reset)s
+0 g
+(\(\))s
+(        self.goal )59.5 442.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.config[)s
+0.376 0 0 r
+('goal')s
+0 g
+(])s
+(        self.closed )59.5 432.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        self.kg )59.5 422.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( nx.)s
+0 0 0.376 r
+(read_gml)s
+0 g
+(\(self.config[)s
+0.376 0 0 r
+('resource_graph')s
+0 g
+(]\))s
+(        self.type_keyed_objects, self.token_keyed_objects )59.5 412.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_get_objects)s
+0 g
+(\(\) )s
+0.376 0 0.376 r
+(# ob)s
+(jects from current state)59.5 402.4 ms
+0 g
+(        self.bound_objects )59.5 392.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( {})s
+(        self.stopper )59.5 382.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(        self.goals )59.5 372.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [self.goal])s
+(        self.completed )59.5 362.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        self.grounded_actions )59.5 352.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 342.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+("¿ Biplex agent initialized.)s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(    )59.5 322.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(add_objects)s
+0 g
+(\(self, constant, typing\):)s
+(        )59.5 312.4 ms
+0.376 0 0 r
+(""")s
+(        Adds object to type_keyed_objects and token_keyed_objects)59.5 302.4 ms
+(        """)59.5 292.4 ms
+0 g
+(        )59.5 272.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( constant )s
+0.376 0 0.376 r
+(in)s
+0 g
+( self.token_keyed_objects:)s
+(            )59.5 262.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(        )59.5 252.4 ms
+F1 sf
+0.376 0 0.376 r
+(try)s
+F0 sf
+0 g
+(:)s
+(            self.token_keyed_objects[constant] )59.5 242.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(typing\))s
+(            self.type_keyed_objects[)59.5 232.4 ms
+0 0 0.376 r
+(str)s
+0 g
+(\(typing\)].)s
+0 0 0.376 r
+(add)s
+0 g
+(\()s
+0 0 0.376 r
+(str)s
+0 g
+(\(constant\)\))s
+(            )59.5 222.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(        )59.5 212.4 ms
+F1 sf
+0.376 0 0.376 r
+(except)s
+F0 sf
+0 g
+(:)s
+(            )59.5 202.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(KeyError)s
+0 g
+(\()s
+0.376 0 0 r
+("Not able to add to objects dicts")s
+0 g
+(\))s
+(        )59.5 182.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(    )59.5 152.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_solve)s
+0 g
+(\(self\):)s
+(        )59.5 142.4 ms
+0.376 0 0 r
+(""")s
+(        High Level Planner)59.5 132.4 ms
+(        Algorithm)59.5 112.4 ms
+(        1. generate a plan sketch)59.5 102.4 ms
+(        2. resolve non-executable/crafting actions \(by proving the objects they are )59.5 92.4 ms
+(meant to create\))59.5 82.4 ms
+(        - do above two steps until planner)59.5 72.4 ms
+(        """)59.5 62.4 ms
+re sp
+%%PageTrailer
+%%Page: 2 2
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 2)59.5 792.4 ms
+F0 sf
+(        click.)59.5 772.4 ms
+0 0 0.376 r
+(secho)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Goal: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(self.goal)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(, fg)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+('blue')s
+0 g
+(\))s
+(        )59.5 752.4 ms
+0.376 0 0.376 r
+(# Initial planning and execution with Stripped Domain File)s
+0 g
+(        status, s1 )59.5 742.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(sketch)s
+0 g
+(\(\))s
+(        )59.5 732.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( status:)s
+(            )59.5 722.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+("Solved.)s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            )59.5 712.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Completed subgoals )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(self.completed)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            click.)59.5 702.4 ms
+0 0 0.376 r
+(secho)s
+0 g
+(\()s
+0.376 0 0 r
+(f"History:)s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(-------)s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+( )s
+0.498 0.125 0.498 r
+({)s
+0.376 0 0 r
+(' --> ')s
+0 g
+(.join\(self.env.history\))s
+0.498 0.125 0.498 r
+(}\\n)s
+0.376 0 0 r
+(")s
+0 g
+(, f)s
+(g)59.5 692.4 ms
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+("magenta")s
+0 g
+(\))s
+(            )59.5 682.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( status, s1)s
+(        )59.5 672.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s1)s
+(    )59.5 642.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(sketch)s
+0 g
+(\(self\):)s
+(        )59.5 632.4 ms
+0.376 0 0 r
+(""")s
+(        High-level planner operating on the stripped domain)59.5 622.4 ms
+(        The stripped domain has all the craft actions, but stripped down to zero pre)59.5 612.4 ms
+(cons)59.5 602.4 ms
+(        """)59.5 592.4 ms
+0 g
+(        goal_in )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.goals.)s
+0 0 0.376 r
+(pop)s
+0 g
+(\()s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(\))s
+(        s0 )59.5 562.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\) )s
+0.376 0 0.376 r
+(# Getting current state)s
+0 g
+(        )59.5 542.4 ms
+0.376 0 0.376 r
+(# We now use the non-executable domain file)s
+0 g
+(        non_exec_domain_file )59.5 532.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("agents/biplex/bias/treasure_nonexec.pddl")s
+0 g
+(        plan )59.5 522.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        executable )59.5 512.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(        )59.5 492.4 ms
+0.376 0 0.376 r
+(# --- Preparing problem file ------ #)s
+0 g
+(        )59.5 482.4 ms
+0.376 0 0.376 r
+(# Ground the goal)s
+0 g
+(        goal )59.5 472.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_ground_literal)s
+0 g
+(\(goal_in\))s
+(        click.)59.5 462.4 ms
+0 0 0.376 r
+(secho)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Goal: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(goal)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(, fg)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+("bright_white")s
+0 g
+(, bold)s
+0.376 0 0.376 r
+(=)s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(\))s
+(        )59.5 442.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( goal )s
+0.376 0 0.376 r
+(in)s
+0 g
+( s0:)s
+(            self.completed.)59.5 432.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(goal\))s
+(            )59.5 422.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, s0)s
+(        )59.5 402.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( goal )s
+0.376 0 0.376 r
+(in)s
+0 g
+( self.completed:)s
+(            )59.5 392.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, s0)s
+(        )59.5 372.4 ms
+0.376 0 0.376 r
+(#We need to add objects from the craft actions)s
+0 g
+(        )59.5 362.4 ms
+0.376 0 0.376 r
+(# Look over nonexec domain and add objects from effects)s
+0 g
+(        )59.5 352.4 ms
+0.376 0 0.376 r
+(# we need to do this so it can come up with a plan for \(have ?x-s\))s
+0 g
+(        parser )59.5 342.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(Parser)s
+0 g
+(\(non_exec_domain_file\))s
+(        domain )59.5 332.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( parser.)s
+0 0 0.376 r
+(parse_domain)s
+0 g
+(\(\))s
+(        )59.5 322.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( name, action )s
+0.376 0 0.376 r
+(in)s
+0 g
+( domain.actions.)s
+0 0 0.376 r
+(items)s
+0 g
+(\(\):)s
+(            )59.5 312.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("*")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( name:)s
+(                sig )59.5 302.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( action.signature)s
+(                )59.5 292.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0 0 0.376 r
+(len)s
+0 g
+(\(sig\) )s
+0.376 0 0.376 r
+(>)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(:)s
+(                    )59.5 282.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(NotImplementedError)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Cannot handle case where action has )s
+(more than one param")59.5 272.4 ms
+0 g
+(\))s
+(                typings )59.5 262.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( sig[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(][)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(])s
+(                )59.5 252.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0 0 0.376 r
+(len)s
+0 g
+(\(typings\) )s
+0.376 0 0.376 r
+(>)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(:)s
+(                    )59.5 242.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(NotImplementedError)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Cannot handle if object variable )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(si)s
+(g[)59.5 232.4 ms
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( has more than one type")s
+0 g
+(\))s
+(                typing )59.5 222.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( typings[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(                arg )59.5 212.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_ground_arg)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+({)s
+0 g
+(sig[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(-)s
+0.498 0.125 0.498 r
+({)s
+0 g
+(typing)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        objects )59.5 182.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_get_objects_from_dicts)s
+0 g
+(\(\))s
+(        init )59.5 172.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\)\))s
+(        temp_problem_file )59.5 162.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_generate_temp_problem_file)s
+0 g
+(\(goal, init, objects\))s
+(        plan )59.5 152.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(plan)s
+0 g
+(\(problem_file)s
+0.376 0 0.376 r
+(=)s
+0 g
+(temp_problem_file, domain_file)s
+0.376 0 0.376 r
+(=)s
+0 g
+(non_exec_domain)s
+(_file\))59.5 142.4 ms
+(        executable, non_executables )59.5 132.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_plan_executable)s
+0 g
+(\(plan\))s
+(        )59.5 122.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Nonexc: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(non_executables)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        )59.5 112.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( plan )s
+0.376 0 0.376 r
+(and)s
+0 g
+( executable:)s
+(            )59.5 102.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(This is an executable plan")s
+0 g
+(\))s
+(            self.completed.)59.5 92.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(goal\))s
+(            )59.5 82.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(execute)s
+0 g
+(\(plan\))s
+(        )59.5 62.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( plan:)s
+(            )59.5 52.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Current state: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(self.env.observe\(\))s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+re sp
+%%PageTrailer
+%%Page: 3 3
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 3)59.5 792.4 ms
+F0 sf
+(            )59.5 772.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Give up. Bye.")s
+0 g
+(\))s
+(            )59.5 762.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s0)s
+(        )59.5 742.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( executable:)s
+(            objects_to_construct )59.5 732.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(\))s
+(            )59.5 722.4 ms
+0.376 0 0.376 r
+(# This means there are either non-executable actions or hypothetical act)s
+(ions)59.5 712.4 ms
+0 g
+(            )59.5 702.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( non_exec_action )s
+0.376 0 0.376 r
+(in)s
+0 g
+( non_executables:)s
+(                name, args )59.5 692.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(non_exec_action.name\))s
+(                )59.5 682.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(                    )59.5 672.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("*")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(                        )59.5 662.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( self.bound_objects:)s
+0.376 0 0.376 r
+(## if already bound, then domai)s
+(n_file)59.5 652.4 ms
+0 g
+(                            )59.5 642.4 ms
+0.376 0 0.376 r
+(continue)s
+0 g
+(                        objects_to_construct.)59.5 632.4 ms
+0 0 0.376 r
+(add)s
+0 g
+(\(arg\))s
+(            )59.5 612.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( ob )s
+0.376 0 0.376 r
+(in)s
+0 g
+( objects_to_construct:)s
+(                status, s1 )59.5 602.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(prove)s
+0 g
+(\(self.token_keyed_objects[ob]\))s
+(                )59.5 592.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( status:)s
+(                    )59.5 582.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Unable to construct object )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(ob)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(                    )59.5 572.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s1)s
+(            )59.5 562.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, s1)s
+(        )59.5 532.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s0)s
+(    )59.5 512.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_get_objects_from_dicts)s
+0 g
+(\(self\):)s
+(        )59.5 502.4 ms
+0.376 0 0 r
+(""")s
+(        Return a pddl friendly listing of objects)59.5 492.4 ms
+(        """)59.5 482.4 ms
+0 g
+(        objects)59.5 472.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+([])s
+(        )59.5 462.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( key, val )s
+0.376 0 0.376 r
+(in)s
+0 g
+( self.token_keyed_objects.)s
+0 0 0.376 r
+(items)s
+0 g
+(\(\):)s
+(            objects.)59.5 452.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+({)s
+0 g
+(key)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( - )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(val)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        )59.5 442.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( objects)s
+(    )59.5 422.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_ground_literal)s
+0 g
+(\(self, literal\):)s
+(        )59.5 412.4 ms
+0.376 0 0 r
+(""")s
+(        returns a literal grounded in either objects the agent knows about OR is hyp)59.5 402.4 ms
+(othesized)59.5 392.4 ms
+(        """)59.5 382.4 ms
+0 g
+(        )59.5 372.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_grounded_literal)s
+0 g
+(\(literal\):)s
+(            )59.5 362.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( literal)s
+(        name, args )59.5 342.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(literal\))s
+(        grounded_args )59.5 332.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 322.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(            grounded_arg )59.5 312.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_ground_arg)s
+0 g
+(\(arg\))s
+(            grounded_args.)59.5 302.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(grounded_arg\))s
+(        )59.5 282.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(_construct_literal)s
+0 g
+(\(name, grounded_args\))s
+(    )59.5 252.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_construct_literal)s
+0 g
+(\(self, name, args\):)s
+(        )59.5 242.4 ms
+0.376 0 0 r
+(""")s
+(        Returns a literal based on name and args)59.5 232.4 ms
+(        \(have t23\))59.5 222.4 ms
+(        """)59.5 212.4 ms
+0 g
+(        )59.5 202.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.376 0 0 r
+(f"\()s
+0.498 0.125 0.498 r
+({)s
+0 g
+(name)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( )s
+0.498 0.125 0.498 r
+({)s
+0.376 0 0 r
+(' ')s
+0 g
+(.join\(args\))s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(    )59.5 172.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_ground_arg)s
+0 g
+(\(self, arg\):)s
+(        )59.5 162.4 ms
+0.376 0 0 r
+(""")s
+(        Returns a grounded arg)59.5 152.4 ms
+(        NOTE: if the object is hypothetical, this is added via self.add_objects\(\))59.5 142.4 ms
+(        """)59.5 132.4 ms
+0 g
+(        )59.5 122.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_grounded_arg)s
+0 g
+(\(arg\):)s
+(            )59.5 112.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( arg)s
+(        symbol, typing )59.5 102.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_arg)s
+0 g
+(\(arg\))s
+(        )59.5 92.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( self.type_keyed_objects[typing]:)s
+(            symbol )59.5 82.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(list)s
+0 g
+(\(self.type_keyed_objects[typing]\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            )59.5 72.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol)s
+(        hypo_sym )59.5 62.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f"*)s
+0.498 0.125 0.498 r
+({)s
+0 g
+(typing)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(_)s
+0.498 0.125 0.498 r
+({)s
+0 0 0.376 r
+(str)s
+0 g
+(\(uuid.uuid4\(\)\)[:)s
+0.498 0.125 0.498 r
+(8)s
+0 g
+(])s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(        self.)59.5 52.4 ms
+0 0 0.376 r
+(add_objects)s
+0 g
+(\(hypo_sym, typing\))s
+re sp
+%%PageTrailer
+%%Page: 4 4
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 4)59.5 792.4 ms
+F0 sf
+(        )59.5 772.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( hypo_sym)s
+(    )59.5 742.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_parse_arg)s
+0 g
+(\(self, arg\):)s
+(        )59.5 732.4 ms
+0.376 0 0 r
+(""")s
+(        Returns symbol, typing)59.5 722.4 ms
+(        input: ?x-t, t23-t, t23, *t234-t)59.5 712.4 ms
+(        output: ?x,t  or t23,t or t23,t or *t234-t)59.5 702.4 ms
+(        """)59.5 692.4 ms
+0 g
+(        )59.5 672.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("?")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(            )59.5 662.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("-")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(                symbol )59.5 652.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(                typing )59.5 642.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(])s
+(                )59.5 632.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol, typing)s
+(            )59.5 622.4 ms
+0.376 0 0.376 r
+(else)s
+0 g
+(:)s
+(                )59.5 612.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(ValueError)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Argument \()s
+0.498 0.125 0.498 r
+({)s
+0 g
+(arg)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\) Must have at least constant or t)s
+(ype")59.5 602.4 ms
+0 g
+(\))s
+(        )59.5 592.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("-")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(            symbol )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            typing )59.5 572.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(])s
+(            )59.5 562.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol, typing)s
+(        symbol )59.5 542.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg)s
+(        )59.5 532.4 ms
+F1 sf
+0.376 0 0.376 r
+(try)s
+F0 sf
+0 g
+(:)s
+(            typing )59.5 522.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.token_keyed_objects[symbol])s
+(            )59.5 512.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol, typing)s
+(        )59.5 502.4 ms
+F1 sf
+0.376 0 0.376 r
+(except)s
+F0 sf
+0 g
+(:)s
+(            )59.5 492.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(ValueError)s
+0 g
+(\()s
+0.376 0 0 r
+(f"The object )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(arg)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( does not exist anywhere")s
+0 g
+(\))s
+(    )59.5 462.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_is_grounded_literal)s
+0 g
+(\(self, literal\):)s
+(        )59.5 452.4 ms
+0.376 0 0 r
+(""")s
+(        Returns true of literal is grounded)59.5 442.4 ms
+(        """)59.5 432.4 ms
+0 g
+(        name, args )59.5 412.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(literal\))s
+(        )59.5 402.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(            )59.5 392.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_grounded_arg)s
+0 g
+(\(arg\):)s
+(                )59.5 382.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(        )59.5 372.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(    )59.5 342.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_parse_literal)s
+0 g
+(\(self, literal\):)s
+(        )59.5 332.4 ms
+0.376 0 0 r
+(""")s
+(        Gets name, and arguments from a string literal as a string, list)59.5 322.4 ms
+(        note: an arg could be "t23" or "?x-t" or "t23-t", assuming well formed.)59.5 312.4 ms
+(        """)59.5 302.4 ms
+0 g
+(        name )59.5 282.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( literal.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(        args )59.5 272.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( literal.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(:])s
+(        )59.5 262.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( name, args)s
+(    )59.5 242.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_is_grounded_arg)s
+0 g
+(\(self, arg\):)s
+(        )59.5 232.4 ms
+0.376 0 0 r
+(""")s
+(        Given an arg, checks if it is grounded)59.5 222.4 ms
+(        arg = "?x-t" or "t23" or "t23-t" or "*t234")59.5 212.4 ms
+(        """)59.5 202.4 ms
+0 g
+(        )59.5 182.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("?")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(            )59.5 172.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(        )59.5 162.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(    )59.5 132.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_get_objects)s
+0 g
+(\(self\):)s
+(        )59.5 122.4 ms
+0.376 0 0 r
+(""")s
+(        Returns objects as a dicts, keyed by types, keyed by object)59.5 112.4 ms
+(        """)59.5 102.4 ms
+0 g
+(        type_keyed_objects )59.5 82.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( collections.)s
+0 0 0.376 r
+(defaultdict)s
+0 g
+(\()s
+0 0 0.376 r
+(set)s
+0 g
+(\))s
+(        token_keyed_objects )59.5 72.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( collections.)s
+0 0 0.376 r
+(defaultdict)s
+0 g
+(\(\))s
+(        state )59.5 62.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\) )s
+0.376 0 0.376 r
+(###*** LOOKS AT ENV ***********)s
+0 g
+(        relevant_objects )59.5 52.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(\))s
+re sp
+%%PageTrailer
+%%Page: 5 5
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 5)59.5 792.4 ms
+F0 sf
+(        )59.5 772.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( literal )s
+0.376 0 0.376 r
+(in)s
+0 g
+( state:)s
+(            objects_in_lit )59.5 762.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( literal.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(:])s
+(            relevant_objects.)59.5 752.4 ms
+0 0 0.376 r
+(update)s
+0 g
+(\(objects_in_lit\))s
+(        )59.5 732.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( o )s
+0.376 0 0.376 r
+(in)s
+0 g
+( relevant_objects:)s
+(            type_val )59.5 722.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(objects)s
+0 g
+(\(\)[o])s
+(            type_keyed_objects[)59.5 712.4 ms
+0 0 0.376 r
+(str)s
+0 g
+(\(type_val\)].)s
+0 0 0.376 r
+(add)s
+0 g
+(\(o\))s
+(            token_keyed_objects[)59.5 702.4 ms
+0 0 0.376 r
+(str)s
+0 g
+(\(o\)] )s
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(type_val\))s
+(        )59.5 682.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( type_keyed_objects, token_keyed_objects)s
+(    )59.5 652.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(prove)s
+0 g
+(\(self, tnode\):)s
+(        )59.5 642.4 ms
+0.376 0 0.376 r
+(# Construction)s
+0 g
+(        )59.5 632.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Expanding resource graph for )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(tnode)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( ...")s
+0 g
+(\))s
+(        s0 )59.5 622.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\))s
+(        )59.5 612.4 ms
+F1 sf
+0.376 0 0.376 r
+(try)s
+F0 sf
+0 g
+(:)s
+(            actions )59.5 602.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(list)s
+0 g
+(\(self.kg.)s
+0 0 0.376 r
+(predecessors)s
+0 g
+(\()s
+0 0 0.376 r
+(str)s
+0 g
+(\(tnode\)\)\))s
+(        )59.5 592.4 ms
+F1 sf
+0.376 0 0.376 r
+(except)s
+F0 sf
+0 g
+(:)s
+(            )59.5 582.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Type )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(tnode)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( does not exist in the resource graph")s
+0 g
+(\))s
+(            )59.5 572.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s0)s
+(        )59.5 562.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( actions:)s
+(            )59.5 552.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Node exists, but has no predecessor actions")s
+0 g
+(\))s
+(        )59.5 532.4 ms
+0.376 0 0.376 r
+(while)s
+0 g
+( actions:)s
+(            anode )59.5 522.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( actions.)s
+0 0 0.376 r
+(pop)s
+0 g
+(\()s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(\))s
+(            status, s1 )59.5 512.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(ground)s
+0 g
+(\(anode\))s
+(            )59.5 502.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( status:)s
+(                )59.5 492.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( status, s1)s
+(        )59.5 472.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s0)s
+(    )59.5 452.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(ground)s
+0 g
+(\(self, anode\):)s
+(        )59.5 442.4 ms
+0.376 0 0.376 r
+(# Node expansion)s
+0 g
+(        precon_types )59.5 432.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(list)s
+0 g
+(\(self.kg.)s
+0 0 0.376 r
+(predecessors)s
+0 g
+(\()s
+0 0 0.376 r
+(str)s
+0 g
+(\(anode\)\)\))s
+(        )59.5 422.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( tnode )s
+0.376 0 0.376 r
+(in)s
+0 g
+( precon_types:)s
+(            self.goals.)59.5 412.4 ms
+0 0 0.376 r
+(insert)s
+0 g
+(\()s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(, )s
+0.376 0 0 r
+(f"\(have ?x-)s
+0.498 0.125 0.498 r
+({)s
+0 g
+(tnode)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(\))s
+(            status, s1 )59.5 402.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(sketch)s
+0 g
+(\(\))s
+(            )59.5 392.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( status:)s
+(                )59.5 382.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s1)s
+(        )59.5 362.4 ms
+0.376 0 0.376 r
+(# once all resources have been acquired, it is time to perform craft action)s
+0 g
+(        )59.5 352.4 ms
+0.376 0 0.376 r
+(# Full fledged navigation and manipulation planning)s
+0 g
+(        )59.5 342.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( anode )s
+0.376 0 0.376 r
+(not)s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( self.grounded_actions:)s
+(            )59.5 332.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Action )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(anode)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( is grounded.")s
+0 g
+(\))s
+(            self.grounded_actions.)59.5 322.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(anode\))s
+(            new_domain_file )59.5 312.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_create_new_domain_file)s
+0 g
+(\(self.kg, anode, self.conf)s
+(ig[)59.5 302.4 ms
+0.376 0 0 r
+('bias')s
+0 g
+(]\))s
+(            goal )59.5 292.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f"\(have ?x-)s
+0.498 0.125 0.498 r
+({)s
+0 0 0.376 r
+(list)s
+0 g
+(\(self.kg.successors\(anode\)\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(            status, s1 )59.5 282.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(plan_execute)s
+0 g
+(\(goal)s
+0.376 0 0.376 r
+(=)s
+0 g
+(goal, domain_file)s
+0.376 0 0.376 r
+(=)s
+0 g
+(new_domain_file\))s
+(            )59.5 272.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( status:)s
+(                self.goals.)59.5 262.4 ms
+0 0 0.376 r
+(insert)s
+0 g
+(\()s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(,self.goal\))s
+(                )59.5 252.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(sketch)s
+0 g
+(\(\))s
+(            )59.5 242.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s1)s
+(        )59.5 232.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\))s
+(    )59.5 202.4 ms
+0.376 0 0.376 r
+(# Full fledged planning. Use carefully)s
+0 g
+(    )59.5 192.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(plan)s
+0 g
+(\(self, problem_file, domain_file\):)s
+(        problem )59.5 182.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(_parse)s
+0 g
+(\(domain_file, problem_file\))s
+(        task )59.5 172.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(_ground)s
+0 g
+(\(problem\))s
+(        )59.5 162.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Domain: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(domain_file)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        )59.5 152.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(*Planning*")s
+0 g
+(, end)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\r)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        solution )59.5 142.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(breadth_first_search)s
+0 g
+(\(task\))s
+(        click.)59.5 132.4 ms
+0 0 0.376 r
+(secho)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Plan: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(solution)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(, fg)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+("green")s
+0 g
+(\))s
+(        )59.5 122.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( solution)s
+(    )59.5 92.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(execute)s
+0 g
+(\(self, plan\):)s
+(        s0 )59.5 82.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\))s
+(        )59.5 72.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( plan:)s
+(            )59.5 62.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(Executing actions:")s
+0 g
+(\))s
+(            )59.5 52.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( idx,a )s
+0.376 0 0.376 r
+(in)s
+0 g
+( )s
+0 0 0.376 r
+(enumerate)s
+0 g
+(\(plan\):)s
+re sp
+%%PageTrailer
+%%Page: 6 6
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 6)59.5 792.4 ms
+F0 sf
+(                click.)59.5 772.4 ms
+0 0 0.376 r
+(secho)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t)s
+0.376 0 0 r
+([)s
+0.498 0.125 0.498 r
+({)s
+0 g
+(idx)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(] )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(a.name)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(, fg)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+('red')s
+0 g
+(\)  )s
+0.376 0 0.376 r
+(# need a.name here b)s
+(ecause these are Operators)59.5 762.4 ms
+0 g
+(                s1 )59.5 752.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(step)s
+0 g
+(\(a.name\))s
+(            )59.5 742.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, s1)s
+(        )59.5 732.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(No plan found")s
+0 g
+(\))s
+(        )59.5 722.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s0)s
+(    )59.5 702.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(plan_execute)s
+0 g
+(\(self, goal, domain_file\):)s
+(        goal )59.5 692.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_ground_literal)s
+0 g
+(\(goal\))s
+(        objects )59.5 682.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_get_objects_from_dicts)s
+0 g
+(\(\))s
+(        init )59.5 672.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\)\))s
+(        temp_problem_file )59.5 662.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_generate_temp_problem_file)s
+0 g
+(\(goal, init, objects\))s
+(        plan )59.5 652.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(plan)s
+0 g
+(\(problem_file)s
+0.376 0 0.376 r
+(=)s
+0 g
+(temp_problem_file, domain_file)s
+0.376 0 0.376 r
+(=)s
+0 g
+(domain_file\))s
+(        )59.5 632.4 ms
+0.376 0 0.376 r
+(# Replace any args that have "*" with ?x-k)s
+0 g
+(        new_plan )59.5 622.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        to_remove )59.5 612.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 602.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( op )s
+0.376 0 0.376 r
+(in)s
+0 g
+( plan:)s
+(            name, args )59.5 592.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(op.name\))s
+(            new_args )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(            )59.5 572.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(                )59.5 562.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("*")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(                    )59.5 552.4 ms
+0.376 0 0.376 r
+(# replace it with a ?x-type)s
+0 g
+(                    to_remove.)59.5 542.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(arg\))s
+(                    typing )59.5 532.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.token_keyed_objects[arg])s
+(                    variable )59.5 522.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("?x")s
+0.376 0 0.376 r
+(+)s
+0 0 0.376 r
+(str)s
+0 g
+(\(uuid.)s
+0 0 0.376 r
+(uuid4)s
+0 g
+(\(\)\)[:)s
+0.498 0.125 0.498 r
+(3)s
+0 g
+(])s
+(                    new_args.)59.5 512.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+({)s
+0 g
+(variable)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(-)s
+0.498 0.125 0.498 r
+({)s
+0 g
+(typing)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(                    )59.5 502.4 ms
+0.376 0 0.376 r
+(continue)s
+0 g
+(                new_args.)59.5 492.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(arg\))s
+(            new_op )59.5 482.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_construct_literal)s
+0 g
+(\(name, new_args\))s
+(            new_plan.)59.5 472.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(new_op\))s
+(        s0 )59.5 452.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\))s
+(        )59.5 442.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( new_plan:)s
+(            )59.5 432.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( idx,a )s
+0.376 0 0.376 r
+(in)s
+0 g
+( )s
+0 0 0.376 r
+(enumerate)s
+0 g
+(\(new_plan\):)s
+(                click.)59.5 422.4 ms
+0 0 0.376 r
+(secho)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t)s
+0.376 0 0 r
+([)s
+0.498 0.125 0.498 r
+({)s
+0 g
+(idx)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(] )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(a)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(, fg)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+('blue')s
+0 g
+(\))s
+(                s1 )59.5 412.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(step)s
+0 g
+(\(a\))s
+(        )59.5 402.4 ms
+0.376 0 0.376 r
+(else)s
+0 g
+(:)s
+(            )59.5 392.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, s0)s
+(        )59.5 372.4 ms
+0.376 0 0.376 r
+(# Remove *k2323 from objects, and add the new k1 from \(have k1\) in current s)s
+(tate)59.5 362.4 ms
+0 g
+(        )59.5 352.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( token )s
+0.376 0 0.376 r
+(in)s
+0 g
+( to_remove:)s
+(            typing )59.5 342.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.token_keyed_objects[token])s
+(            self.)59.5 332.4 ms
+0 0 0.376 r
+(_remove_token_from_objects)s
+0 g
+(\(token\))s
+(            )59.5 322.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( literal )s
+0.376 0 0.376 r
+(in)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\):)s
+(                name, args )59.5 312.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(literal\))s
+(                )59.5 302.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("have")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( name:)s
+(                    type_of_arg )59.5 292.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(objects)s
+0 g
+(\(\)[args[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(]])s
+(                    )59.5 282.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( type_of_arg.name )s
+0.376 0 0.376 r
+(==)s
+0 g
+( typing:)s
+(                        self.)59.5 272.4 ms
+0 0 0.376 r
+(add_objects)s
+0 g
+(\(args[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(],typing\))s
+(        self.completed.)59.5 252.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(goal\))s
+(        )59.5 242.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, s1)s
+(    )59.5 222.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_remove_token_from_objects)s
+0 g
+(\(self, token\):)s
+(        typing )59.5 212.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.token_keyed_objects[token])s
+(        )59.5 202.4 ms
+0.376 0 0.376 r
+(del)s
+0 g
+( self.token_keyed_objects[token])s
+(        self.type_keyed_objects[typing].)59.5 192.4 ms
+0 0 0.376 r
+(remove)s
+0 g
+(\(token\))s
+(        )59.5 182.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(    )59.5 152.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_generate_temp_problem_file)s
+0 g
+(\(self, goal, init, objects\):)s
+(        goal_line )59.5 142.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f"\(:goal )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(goal)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(        init_line )59.5 132.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("\(:init")s
+0 g
+( )s
+0.376 0 0.376 r
+(+)s
+0 g
+( )s
+0.376 0 0 r
+(" ")s
+0 g
+( )s
+0.376 0 0.376 r
+(+)s
+0 g
+( )s
+0.376 0 0 r
+(" ")s
+0 g
+(.)s
+0 0 0.376 r
+(join)s
+0 g
+(\(init\) )s
+0.376 0 0.376 r
+(+)s
+0 g
+( )s
+0.376 0 0 r
+("\)")s
+0 g
+(        objects_line )59.5 122.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("\(:objects")s
+0 g
+( )s
+0.376 0 0.376 r
+(+)s
+0 g
+( )s
+0.376 0 0 r
+(" ")s
+0 g
+( )s
+0.376 0 0.376 r
+(+)s
+0 g
+( )s
+0.376 0 0 r
+(" ")s
+0 g
+(.)s
+0 0 0.376 r
+(join)s
+0 g
+(\(objects\) )s
+0.376 0 0.376 r
+(+)s
+0 g
+( )s
+0.376 0 0 r
+("\)")s
+0 g
+(        domain_line )59.5 112.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("\(:domain treasure\)")s
+0 g
+( )s
+0.376 0 0.376 r
+(#HACK )s
+F1 sf
+0.376 0 0 r
+(TODO)s
+F0 sf
+0.376 0 0.376 r
+( need to fix)s
+0 g
+(        define_line )59.5 102.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("\(define \(problem treasure\)")s
+0 g
+( )s
+0.376 0 0.376 r
+(#HACK )s
+F1 sf
+0.376 0 0 r
+(TODO)s
+F0 sf
+0.376 0 0.376 r
+( fix)s
+0 g
+(        self.problem_file )59.5 82.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("agents/biplex/temp/problem_gen.pddl")s
+0 g
+(        )59.5 72.4 ms
+0.376 0 0.376 r
+(with)s
+0 g
+( )s
+0 0 0.376 r
+(open)s
+0 g
+(\(self.problem_file, )s
+0.376 0 0 r
+("w+")s
+0 g
+(\) )s
+0.376 0 0.376 r
+(as)s
+0 g
+( f:)s
+(            f.)59.5 62.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(define_line\))s
+(            f.)59.5 52.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+re sp
+%%PageTrailer
+%%Page: 7 7
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 7)59.5 792.4 ms
+F0 sf
+(            f.)59.5 772.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(domain_line\))s
+(            f.)59.5 762.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            f.)59.5 752.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(objects_line\))s
+(            f.)59.5 742.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            f.)59.5 732.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(init_line\))s
+(            f.)59.5 722.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            f.)59.5 712.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(goal_line\))s
+(            f.)59.5 702.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            f.)59.5 692.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(\))s
+(        )59.5 682.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.problem_file)s
+(    )59.5 652.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_is_plan_executable)s
+0 g
+(\(self, plan\):)s
+(        )59.5 642.4 ms
+0.376 0 0 r
+(""")s
+(        Returns False if any part of the action literal contains a "*")59.5 632.4 ms
+(        \(*craftk *k_b23132\))59.5 622.4 ms
+(        \(*crafk k2\))59.5 612.4 ms
+(        \(pickup *k_b242323\))59.5 602.4 ms
+(        Also returns the action literal)59.5 582.4 ms
+(        """)59.5 572.4 ms
+0 g
+(        nonexec_actions )59.5 562.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        flag )59.5 552.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(        )59.5 542.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( plan:)s
+(            )59.5 532.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, [])s
+(        )59.5 522.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( action )s
+0.376 0 0.376 r
+(in)s
+0 g
+( plan:)s
+(            )59.5 512.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("*")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( action.name:  )s
+0.376 0 0.376 r
+(#actually this is an Operator in Pyperplan repre)s
+(sentation)59.5 502.4 ms
+0 g
+(                flag )59.5 492.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(                nonexec_actions.)59.5 482.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(action\))s
+(        )59.5 472.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( flag:)s
+(            )59.5 462.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(, [])s
+(        )59.5 452.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(, nonexec_actions)s
+(    )59.5 422.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_create_new_domain_file)s
+0 g
+(\(self, graph, anode, current_domain\):)s
+(        action_symbol )59.5 412.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t)s
+0.376 0 0 r
+(\(:action )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(anode)s
+0.498 0.125 0.498 r
+(}\\n)s
+0.376 0 0 r
+(")s
+0 g
+(        precon_types )59.5 402.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(list)s
+0 g
+(\(graph.)s
+0 0 0.376 r
+(predecessors)s
+0 g
+(\()s
+0 0 0.376 r
+(str)s
+0 g
+(\(anode\)\)\))s
+(        precons )59.5 392.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        effects )59.5 382.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        params )59.5 372.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 362.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( p )s
+0.376 0 0.376 r
+(in)s
+0 g
+( precon_types:)s
+(            variable )59.5 352.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("?x")s
+0.376 0 0.376 r
+(+)s
+0 0 0.376 r
+(str)s
+0 g
+(\(uuid.)s
+0 0 0.376 r
+(uuid4)s
+0 g
+(\(\)\)[:)s
+0.498 0.125 0.498 r
+(3)s
+0 g
+(])s
+(            param )59.5 342.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+({)s
+0 g
+(variable)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( - )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(p)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(            pred )59.5 332.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f"\(have )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(variable)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(            effp )59.5 322.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f"\(not )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(pred)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(            precons.)59.5 312.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(pred\))s
+(            effects.)59.5 302.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(effp\))s
+(            params.)59.5 292.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(param\))s
+(        eff_types )59.5 272.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(list)s
+0 g
+(\(graph.)s
+0 0 0.376 r
+(successors)s
+0 g
+(\()s
+0 0 0.376 r
+(str)s
+0 g
+(\(anode\)\)\))s
+(        )59.5 262.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( e )s
+0.376 0 0.376 r
+(in)s
+0 g
+( eff_types:)s
+(            variable )59.5 252.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("?y")s
+0.376 0 0.376 r
+(+)s
+0 0 0.376 r
+(str)s
+0 g
+(\(uuid.)s
+0 0 0.376 r
+(uuid4)s
+0 g
+(\(\)\)[:)s
+0.498 0.125 0.498 r
+(3)s
+0 g
+(])s
+(            param )59.5 242.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+({)s
+0 g
+(variable)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( - )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(e)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(            effp )59.5 232.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f"\(have )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(variable)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(            effects.)59.5 222.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(effp\))s
+(            params.)59.5 212.4 ms
+0 0 0.376 r
+(insert)s
+0 g
+(\()s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(,param\))s
+(        param_line )59.5 192.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t)s
+0.376 0 0 r
+(:parameters \()s
+0.498 0.125 0.498 r
+({)s
+0.376 0 0 r
+(' ')s
+0 g
+(.join\(params\))s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\))s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(")s
+0 g
+(        precon_line )59.5 182.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t)s
+0.376 0 0 r
+(:precondition \(and )s
+0.498 0.125 0.498 r
+({)s
+0.376 0 0 r
+(' ')s
+0 g
+(.join\(precons\))s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\))s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(")s
+0 g
+(        effects_line )59.5 172.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t)s
+0.376 0 0 r
+(:effect \(and )s
+0.498 0.125 0.498 r
+({)s
+0.376 0 0 r
+(' ')s
+0 g
+(.join\(effects\))s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)\)")s
+0 g
+(        action_entry )59.5 152.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( action_symbol)s
+0.376 0 0.376 r
+(+)s
+0 g
+(param_line)s
+0.376 0 0.376 r
+(+)s
+0 g
+(precon_line)s
+0.376 0 0.376 r
+(+)s
+0 g
+(effects_line)s
+(        new_domain_filename )59.5 122.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( current_domain.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(".pddl")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+0.376 0 0.376 r
+(+)s
+0.376 0 0 r
+("_gen.pddl")s
+0 g
+(        )59.5 112.4 ms
+0.376 0 0.376 r
+(with)s
+0 g
+( )s
+0 0 0.376 r
+(open)s
+0 g
+(\(current_domain,)s
+0.376 0 0 r
+('r')s
+0 g
+(\) )s
+0.376 0 0.376 r
+(as)s
+0 g
+( current, )s
+0 0 0.376 r
+(open)s
+0 g
+(\(new_domain_filename,)s
+0.376 0 0 r
+('w')s
+0 g
+(\) )s
+0.376 0 0.376 r
+(as)s
+0 g
+( s)s
+(econdfile:)59.5 102.4 ms
+(            lines )59.5 92.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( current.)s
+0 0 0.376 r
+(readlines)s
+0 g
+(\(\))s
+(            )59.5 82.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( line )s
+0.376 0 0.376 r
+(in)s
+0 g
+( lines[:)s
+0.376 0 0.376 r
+(-)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(]:)s
+(                secondfile.)59.5 72.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(line\))s
+(            secondfile.)59.5 62.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            secondfile.)59.5 52.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\(action_entry\))s
+re sp
+%%PageTrailer
+%%Page: 8 8
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(agents/biplex/biplexagent.py                                                  Page 8)59.5 792.4 ms
+F0 sf
+(            secondfile.)59.5 772.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\n)s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(            secondfile.)59.5 762.4 ms
+0 0 0.376 r
+(write)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(\))s
+(        )59.5 742.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( new_domain_filename)s
+re sp
+%%PageTrailer
+%%Trailer
+%%Pages: 8
+%%EOF
+
