@@ -30,6 +30,7 @@ class BiplexAgent(Agent):
 
     def __init__(self, ctx):
         super().__init__()
+        print("🍁 Biplex agent\n")
         self.config = ctx
         self.env = PyperWrapper(pddlgym.make(self.config['env']))
         try:
@@ -39,7 +40,10 @@ class BiplexAgent(Agent):
         self.env.reset()
         self.goal = self.config['goal']
         self.closed = []
-        self.kg = nx.read_gml(self.config['resource_graph'])
+        resource_graph_loc = f"agents/biplex/temp/{self.config['env']}/crafting_knowledge.gml"
+
+        # self.kg = nx.read_gml(self.config['resource_graph'])
+        self.kg = nx.read_gml(resource_graph_loc)
         self.type_keyed_objects, self.token_keyed_objects = self._get_objects() # objects from current state
         self.bound_objects = {}
         self.stopper = True
@@ -53,7 +57,6 @@ class BiplexAgent(Agent):
             self.planner = PyperPlanner(self.config)
         else:
             raise ValueError("Could not initialize planner. Check the name. Should be FF or pyper")
-        print("🍁 Biplex agent initialized.\n")
 
     def add_objects(self, constant, typing):
         """
@@ -82,6 +85,8 @@ class BiplexAgent(Agent):
         - do above two steps until planner
         """
 
+
+        print("Solving...\n")
         click.secho(f"Goal: {self.goal}", fg='blue')
         click.secho(f"Difficulty level: {self.config['problem']}")
 
@@ -107,12 +112,12 @@ class BiplexAgent(Agent):
         s0 = self.env.observe() # Getting current state
 
         # We now use the non-executable domain file
-        self.non_exec_domain_file = "agents/biplex/bias/treasure_nonexec.pddl"
+        self.non_exec_domain_file = f"agents/biplex/temp/{self.config['env']}/domain_nonexec.pddl"
         plan = []
         executable = False
 
         # --- Preparing problem file ------ #
-        # Ground the goal
+        # Ground the goal either into an object the agent can observe or into a hypothesized entity
         goal = self._ground_literal(goal_in)
 
         if goal in s0:
@@ -154,7 +159,7 @@ class BiplexAgent(Agent):
 
         if not plan:
             print(f"Current state: {self.env.observe()}")
-            print(f"\tGive up. Bye.")
+            print(f"\tCould not generate a plan sketch. Give up. Bye.")
             return False, s0
 
         if not executable:
@@ -173,6 +178,7 @@ class BiplexAgent(Agent):
                     status, s1 = self.prove(self.token_keyed_objects[ob])
                     if not status:
                         print(f"Unable to construct object {ob}")
+
                         return False, s1
             return True, s1
 
@@ -292,6 +298,7 @@ class BiplexAgent(Agent):
         """
         Returns objects as a dicts, keyed by types, keyed by object
         """
+        click.secho("👀 Observing the world..." )
 
         type_keyed_objects = collections.defaultdict(set)
         token_keyed_objects = collections.defaultdict()
@@ -343,7 +350,9 @@ class BiplexAgent(Agent):
         if anode not in self.grounded_actions:
             print(f"\tAction {anode} is grounded.")
             self.grounded_actions.append(anode)
-            new_domain_file = self._create_new_domain_file(self.kg, anode, self.config['bias'])
+            bare_domain_loc = f"agents/biplex/temp/{self.config['env']}/domain_bare.pddl"
+            # new_domain_file = self._create_new_domain_file(self.kg, anode, self.config['bias'])
+            new_domain_file = self._create_new_domain_file(self.kg, anode, bare_domain_loc)
             goal = f"(have ?x-{list(self.kg.successors(anode))[0]})"
             status, s1 = self.plan_execute(goal=goal, domain_file=new_domain_file)
             if status:
@@ -406,6 +415,7 @@ class BiplexAgent(Agent):
             for idx,a in enumerate(new_plan):
                 click.secho(f"\t\t[{idx}] {a}", fg='blue')
                 s1 = self.env.step(a)
+                # print(f"State: {s1}")
         else:
             return False, s0
 
@@ -431,13 +441,14 @@ class BiplexAgent(Agent):
 
 
     def _generate_temp_problem_file(self, goal, init, objects):
+        domain_name = self.config['env'].split("-")[0].split("Env")[1].lower()
         goal_line = f"(:goal {goal})"
         init_line = "(:init" + " " + " ".join(init) + ")"
         objects_line = "(:objects" + " " + " ".join(objects) + ")"
-        domain_line = "(:domain treasure)" #HACK TODO need to fix
-        define_line = "(define (problem treasure)" #HACK TODO fix
+        domain_line = f"(:domain {domain_name})"
+        define_line = f"(define (problem {domain_name})"
 
-        self.problem_file = "agents/biplex/temp/problem_gen.pddl"
+        self.problem_file = f"agents/biplex/temp/{self.config['env']}/problem_gen.pddl"
         with open(self.problem_file, "w+") as f:
             f.write(define_line)
             f.write("\n\n")
@@ -492,13 +503,15 @@ class BiplexAgent(Agent):
             effects.append(effp)
             params.append(param)
 
+        # Add effects to the beginning of the params list
+        # this is so that ?y shows up first
         eff_types = list(graph.successors(str(anode)))
         for e in eff_types:
             variable = "?y"+str(uuid.uuid4())[:3]
             param = f"{variable} - {e}"
             effp = f"(have {variable})"
             effects.append(effp)
-            params.insert(0,param)
+            params.insert(0,param)  # INSERT Effect params at the beginning of the param list.
 
         # add any precons from non_exec_domain_file (these are things like (at ?x-r)
         # Lots of pyperplan parsing
@@ -516,7 +529,7 @@ class BiplexAgent(Agent):
                                 variable_types.append(arg[1][0].name)
                     new_variables = [x+str(uuid.uuid4())[:3] for x in original_variables]
                     new_params = [f"{v} - {t}" for (v, t) in zip(new_variables, variable_types)]
-                    params.extend(new_params)
+                    params.extend(new_params) # INSERT these params at the end.
                     pred = f"({precon_predicate.name} {' '.join(new_variables)})"
                     precons.append(pred)
 
@@ -532,7 +545,8 @@ class BiplexAgent(Agent):
         action_entry = action_symbol+param_line+precon_line+effects_line
 
 
-        new_domain_filename = bare_domain.split(".pddl")[0]+"_gen.pddl"
+        # new_domain_filename = bare_domain.split(".pddl")[0] +"_gen.pddl"
+        new_domain_filename = f"agents/biplex/temp/{self.config['env']}/domain_gen.pddl"
         with open(bare_domain,'r') as current, open(new_domain_filename,'w') as secondfile:
             lines = current.readlines()
             for line in lines[:-1]:

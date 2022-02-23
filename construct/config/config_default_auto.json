@@ -1,1 +1,1 @@
-{"verbose": false, "goal": "(have ?x-t)", "problem": 8, "expts_folder": "experiments/", "agent": "biplex", "env": "PDDLEnvTreasure-v0", "bias": "agents/biplex/bias/treasure.pddl", "resource_graph": "agents/biplex/bias/crafting_knowledge.gml", "planner": "ff"}
+{"verbose": false, "env": "PDDLEnvPancake-v0", "goal": "(have ?x-yfl)", "problem": 1, "expts_folder": "experiments/", "agent": "biplex", "bias": "agents/biplex/bias/treasure.pddl", "resource_graph": "agents/biplex/bias/crafting_knowledge.gml", "planner": "ff"}

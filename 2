@@ -2,8 +2,6 @@ import gym
 import pddlgym.structs as pgym
 import pyperplan.pddl.pddl as pyper
 import collections
-import re
-
 
 """
 Bunch of wrappers useful to convert between PDDLGym and other representations
@@ -85,83 +83,29 @@ class PyperWrapper(gym.Wrapper):
 
 
     def step(self, action):
-        # print("\t\t\t===DEBUG===")
-        # print(f"\t\t\tAction submitted by agent: {action}")
+        print("\t\t\t===DEBUG===")
+        print(f"\t\t\tAction submitted by agent: {action}")
         action = self._ground_literal(action) #Allows me to provide lifted actions
-        # print(f"\t\t\tGrounded Action: {action}")
-
-        # For crafting actions (those with numerals in their names), figure out best action in the gym
-        action_name, action_args = self._parse_literal(action)
-        if True in [char.isdigit() for char in action_name]:
-            action = self._get_gym_action_match(action)
-        # print(f"\t\t\tUpdated Grounded Action: {action}")
-
-        action_pddlgym = self._action_pyper_to_pddlgym(action)
-        # print(f"\t\t\tActual PDDLGym Action: {action_pddlgym}")
-        next_state = self.env.step(action_pddlgym)
-        self.history.append(action)
-        self.current_state = next_state
-        # print(f"\t\t\tCurrent state: {self.current_state}")
-
-        return self.observe()
-
-##############
-
-
-    def _get_gym_action_match(self, action):
-        """
-        Given a grounded action, figure out which gym action matches
-        e.g., Given "(mix1 eggbatter4 yoke2 egghite1 salt3 milk2 sugar4 bowl1) ==> (mixingredient1 eggbatter4 yoke2 eggwhite1 milk2 salt3 bowl1)
-        Notice we changed the order, we picked a specific refined action from set of available gym actions and also one in which fewer ingredients were used (dropped sugar4)
-        """
-
-        # Let's first get a set of gym actions that match in name
-        gym_actions = self.env.action_space.predicates
-        action_name, action_args = self._parse_literal(action)
-        avail_actions = []
-        for gact in gym_actions:
-            if re.split(r'(\d+)', action_name)[0] in gact.name:
-                avail_actions.append(gact)
-
-        if not avail_actions:
-            return action
-
-
-
-        # Next we have to check if for any of the available actions, we can bind all the params
-        working_action = {}
-        for gact in avail_actions:
-            works = True
-            final_args = []
-            for gtype in gact.var_types[1:]:
-                matching = False
-                for arg in action_args:
-                    if not arg in final_args:
-                        if self.token_keyed_objects[arg] == str(gtype):
-                            final_args.append(arg)
-                            matching = True
-                if not matching:
-                    works = False
-
-            # If there is unused stuff in action_args minus the output type, then our work is not done
-            if len(action_args)-1 > len(final_args):
-                works = False
-
-            if works:
-                if self.type_keyed_objects[str(gact.var_types[0])]:
-                    symbol = list(self.type_keyed_objects[str(gact.var_types[0])])[0]
-                    final_args.insert(0,symbol)
-                    return f"({gact.name} {' '.join(final_args)})"
-        return action
-
-
+        print(f"\t\t\tGrounded Action: {action}")
 
         ########### to refactor, move to smaller functions #########################
         # Update grounded action to something that the PDDLGym environment can execute
         # That is, find an action that can execute
         # action names
+        action_name, action_args = self._parse_literal(action)
+        gym_actions = self.env.action_space.predicates
 
-        # Applying a series of filters
+        avail_actions = []
+        #check action is a crafting action (if it contains numeral in its name )  #TODO fix this HACK
+        if True in [char.isdigit() for char in action_name]:
+            gym_action = None
+            for act in gym_actions:
+                if action_name in act.name:
+                    gym_action = act
+                    break
+            gym_types = gym_action.var_types
+
+            for 
 
 
 
@@ -170,6 +114,16 @@ class PyperWrapper(gym.Wrapper):
 
         #######################################
 
+        action_pddlgym = self._action_pyper_to_pddlgym(action)
+        print(f"\t\t\tActual PDDLGym Action: {action_pddlgym}")
+        next_state = self.env.step(action_pddlgym)
+        self.history.append(action)
+        self.current_state = next_state
+        # print(f"\t\t\tCurrent state: {self.current_state}")
+
+        return self.observe()
+
+##############
 
 
     def _ground_literal(self, literal):

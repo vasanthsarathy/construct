@@ -1,0 +1,2135 @@
+%!PS-Adobe-3.0
+%%Title: construct/wrappers.py
+%%For: vsarathy
+%%Creator: NVIM v0.4.3
+%%CreationDate: Tue Feb 22 13:25:48 2022
+%%DocumentData: Clean8Bit
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%BoundingBox: 59 49 564 800
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-Oblique
+%%+ font Courier-BoldOblique
+%%DocumentSuppliedResources: procset VIM-Prolog 1.4 1
+%%+ encoding VIM-latin1 1.0 0
+%%Requirements: duplex collate color
+%%EndComments
+%%BeginDefaults
+%%PageResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-Oblique
+%%+ font Courier-BoldOblique
+%%PageMedia: A4
+%%EndDefaults
+%%BeginProlog
+%%BeginResource: procset VIM-Prolog
+%%BeginDocument: /usr/share/nvim/runtime/print/prolog.ps
+%!PS-Adobe-3.0 Resource-ProcSet
+%%Title: VIM-Prolog
+%%Version: 1.4 1
+%%EndComments
+% Editing of this file is NOT RECOMMENDED.  You run a very good risk of causing
+% all PostScript printing from VIM failing if you do.  PostScript is not called
+% a write-only language for nothing!
+/packedarray where not{userdict begin/setpacking/pop load def/currentpacking
+false def end}{pop}ifelse/CP currentpacking def true setpacking
+/bd{bind def}bind def/ld{load def}bd/ed{exch def}bd/d/def ld
+/db{dict begin}bd/cde{currentdict end}bd
+/T true d/F false d
+/SO null d/sv{/SO save d}bd/re{SO restore}bd
+/L2 systemdict/languagelevel 2 copy known{get exec}{pop pop 1}ifelse 2 ge d
+/m/moveto ld/s/show ld /ms{m s}bd /g/setgray ld/r/setrgbcolor ld/sp{showpage}bd
+/gs/gsave ld/gr/grestore ld/cp/currentpoint ld
+/ul{gs UW setlinewidth cp UO add 2 copy newpath m 3 1 roll add exch lineto
+stroke gr}bd
+/bg{gs r cp BO add 4 -2 roll rectfill gr}bd
+/sl{90 rotate 0 exch translate}bd
+L2{
+/sspd{mark exch{setpagedevice}stopped cleartomark}bd
+/nc{1 db/NumCopies ed cde sspd}bd
+/sps{3 db/Orientation ed[3 1 roll]/PageSize ed/ImagingBBox null d cde sspd}bd
+/dt{2 db/Tumble ed/Duplex ed cde sspd}bd
+/c{1 db/Collate ed cde sspd}bd
+}{
+/nc{/#copies ed}bd
+/sps{statusdict/setpage get exec}bd
+/dt{statusdict/settumble 2 copy known{get exec}{pop pop pop}ifelse
+statusdict/setduplexmode 2 copy known{get exec}{pop pop pop}ifelse}bd
+/c{pop}bd
+}ifelse
+/ffs{findfont exch scalefont d}bd/sf{setfont}bd
+/ref{1 db findfont dup maxlength dict/NFD ed{exch dup/FID ne{exch NFD 3 1 roll
+put}{pop pop}ifelse}forall/Encoding findresource dup length 256 eq{NFD/Encoding
+3 -1 roll put}{pop}ifelse NFD dup/FontType get 3 ne{/CharStrings}{/CharProcs}
+ifelse 2 copy known{2 copy get dup maxlength dict copy[/questiondown/space]{2
+copy known{2 copy get 2 index/.notdef 3 -1 roll put pop exit}if pop}forall put
+}{pop pop}ifelse dup NFD/FontName 3 -1 roll put NFD definefont pop end}bd
+CP setpacking
+(\004)cvn{}bd
+% vim:ff=unix:
+%%EOF
+%%EndDocument
+%%EndResource
+%%BeginResource: encoding VIM-latin1
+%%BeginDocument: /usr/share/nvim/runtime/print/latin1.ps
+%!PS-Adobe-3.0 Resource-Encoding
+%%Title: VIM-latin1
+%%Version: 1.0 0
+%%EndComments
+/VIM-latin1[
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quotesingle
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash
+/zero /one /two /three /four /five /six /seven
+/eight /nine /colon /semicolon /less /equal /greater /question
+/at /A /B /C /D /E /F /G
+/H /I /J /K /L /M /N /O
+/P /Q /R /S /T /U /V /W
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+/grave /a /b /c /d /e /f /g
+/h /i /j /k /l /m /n /o
+/p /q /r /s /t /u /v /w
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis]
+/Encoding defineresource pop
+% vim:ff=unix:
+%%EOF
+%%EndDocument
+%%EndResource
+%%EndProlog
+%%BeginSetup
+595 842 0 sps
+1 nc
+T F dt
+T c
+%%IncludeResource: font Courier
+/_F0 /VIM-latin1 /Courier ref
+/F0 10 /_F0 ffs
+%%IncludeResource: font Courier-Bold
+/_F1 /VIM-latin1 /Courier-Bold ref
+/F1 10 /_F1 ffs
+%%IncludeResource: font Courier-Oblique
+/_F2 /VIM-latin1 /Courier-Oblique ref
+/F2 10 /_F2 ffs
+%%IncludeResource: font Courier-BoldOblique
+/_F3 /VIM-latin1 /Courier-BoldOblique ref
+/F3 10 /_F3 ffs
+/UO -1 d
+/UW 0.5 d
+/BO -2.5 d
+%%EndSetup
+%%Page: 1 1
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(construct/wrappers.py                                                         Page 1)59.5 792.4 ms
+F0 sf
+0.376 0 0.376 r
+(import)59.5 772.4 ms
+0 g
+( gym)s
+0.376 0 0.376 r
+(import)59.5 762.4 ms
+0 g
+( pddlgym.structs )s
+0.376 0 0.376 r
+(as)s
+0 g
+( pgym)s
+0.376 0 0.376 r
+(import)59.5 752.4 ms
+0 g
+( pyperplan.pddl.pddl )s
+0.376 0 0.376 r
+(as)s
+0 g
+( pyper)s
+0.376 0 0.376 r
+(import)59.5 742.4 ms
+0 g
+( collections)s
+0.376 0 0 r
+(""")59.5 722.4 ms
+(Bunch of wrappers useful to convert between PDDLGym and other representations)59.5 712.4 ms
+(""")59.5 702.4 ms
+0.376 0 0.376 r
+(# String Wrapper)59.5 682.4 ms
+(class)59.5 672.4 ms
+0 g
+( )s
+0.376 0 0 r
+(StringWrapper)s
+0 g
+(\(gym.Wrapper\):)s
+(    )59.5 662.4 ms
+0.376 0 0 r
+(""")s
+(    Allows for providing actions as strings rather than the pddlgym representation)59.5 652.4 ms
+(    """)59.5 642.4 ms
+0 g
+(    )59.5 632.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(__init__)s
+0 g
+(\(self, env\):)s
+(        )59.5 622.4 ms
+0 0 0.376 r
+(super)s
+0 g
+(\(\).)s
+0 0 0.376 r
+(__init__)s
+0 g
+(\(env\))s
+(        self.env )59.5 612.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( env)s
+(    )59.5 592.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(step)s
+0 g
+(\(self,action_str\):)s
+(        action )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_str_to_action)s
+0 g
+(\(action_str\))s
+(        )59.5 572.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Action: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(action)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(, )s
+0 0 0.376 r
+(type)s
+0 g
+(\(action\)\))s
+(        next_state, reward, done, info )59.5 562.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(step)s
+0 g
+(\(action\))s
+(        )59.5 552.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( next_state, reward, done, info)s
+(    )59.5 532.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_str_to_action)s
+0 g
+(\(self, action_str\):)s
+(        name )59.5 522.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( action_str.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(        args )59.5 512.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( action_str.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(].)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(",")s
+0 g
+(\))s
+(        objs )59.5 502.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 492.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(            arg )59.5 482.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\))s
+(            obj_type_str )59.5 472.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(":")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(])s
+(            obj_const_str )59.5 462.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(":")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            obj_type )59.5 442.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pgym.)s
+0 0 0.376 r
+(Type)s
+0 g
+(\(obj_type_str\))s
+(            obj_const )59.5 432.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(obj_type)s
+0 g
+(\(obj_const_str\))s
+(            objs.)59.5 422.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(obj_const\))s
+(        actionP )59.5 412.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pgym.)s
+0 0 0.376 r
+(Predicate)s
+0 g
+(\(name, )s
+0 0 0.376 r
+(len)s
+0 g
+(\(args\)\))s
+(        action )59.5 402.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pgym.)s
+0 0 0.376 r
+(Literal)s
+0 g
+(\(actionP, objs\))s
+(        )59.5 392.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( action)s
+0.376 0 0.376 r
+(# pyperplan wrapper)59.5 372.4 ms
+(class)59.5 362.4 ms
+0 g
+( )s
+0.376 0 0 r
+(PyperWrapper)s
+0 g
+(\(gym.Wrapper\):)s
+(    )59.5 352.4 ms
+0.376 0 0 r
+(""")s
+(    Allows for translating between pddlgym and pyperplan representations.)59.5 342.4 ms
+(    Can run pyperplan solutions in pddlgym)59.5 332.4 ms
+(    Can read pddlgym output in pyperplan state representation)59.5 322.4 ms
+(    """)59.5 312.4 ms
+0 g
+(    )59.5 302.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(__init__)s
+0 g
+(\(self, env\):)s
+(        )59.5 292.4 ms
+0 0 0.376 r
+(super)s
+0 g
+(\(\).)s
+0 0 0.376 r
+(__init__)s
+0 g
+(\(env\))s
+(        self.env )59.5 282.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( env)s
+(        self.current_state )59.5 272.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(None)s
+0 g
+(  )s
+0.376 0 0.376 r
+(# going to be in default pddlgym representation)s
+0 g
+(        self.root_object_type )59.5 262.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pyper.)s
+0 0 0.376 r
+(Type)s
+0 g
+(\()s
+0.376 0 0 r
+("object")s
+0 g
+(,)s
+0.498 0.125 0.498 r
+(None)s
+0 g
+(\))s
+(        self.history )59.5 252.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [] )s
+0.376 0 0.376 r
+(#In pyperplan format)s
+0 g
+(    )59.5 232.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(reset)s
+0 g
+(\(self, )s
+0.376 0 0.376 r
+(**)s
+0 g
+(kwargs\):)s
+(        obs )59.5 222.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(reset)s
+0 g
+(\()s
+0.376 0 0.376 r
+(**)s
+0 g
+(kwargs\))s
+(        self.current_state )59.5 212.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( obs)s
+(        self.type_keyed_objects, self.token_keyed_objects )59.5 202.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_get_objects)s
+0 g
+(\(\) )s
+0.376 0 0.376 r
+(# ob)s
+(jects from current state)59.5 192.4 ms
+0 g
+(        )59.5 182.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\))s
+(    )59.5 162.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(observe)s
+0 g
+(\(self, source)s
+0.376 0 0.376 r
+(=)s
+0.376 0 0 r
+('pypertask')s
+0 g
+(\):)s
+(        )59.5 152.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( source )s
+0.376 0 0.376 r
+(==)s
+0 g
+( )s
+0.376 0 0 r
+('pyperpred')s
+0 g
+(:)s
+(            )59.5 142.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(_obs_pddlgym_to_pyper)s
+0 g
+(\(self.current_state\))s
+(        )59.5 132.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( source )s
+0.376 0 0.376 r
+(==)s
+0 g
+( )s
+0.376 0 0 r
+('pddlgym')s
+0 g
+(:)s
+(            )59.5 122.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.current_state)s
+(        )59.5 112.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( source )s
+0.376 0 0.376 r
+(==)s
+0 g
+( )s
+0.376 0 0 r
+('pypertask')s
+0 g
+(:)s
+(            )59.5 102.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(_obs_pddlgym_to_pypertask)s
+0 g
+(\(self.current_state\))s
+(        )59.5 92.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(ValueError)s
+0 g
+(\()s
+0.376 0 0 r
+("source must be either 'pyper' or 'pddlgym'")s
+0 g
+(\))s
+(    )59.5 72.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(objects)s
+0 g
+(\(self\):)s
+(        )59.5 62.4 ms
+0.376 0 0 r
+(""")s
+(        Returns all the objects in the current state)59.5 52.4 ms
+re sp
+%%PageTrailer
+%%Page: 2 2
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(construct/wrappers.py                                                         Page 2)59.5 792.4 ms
+F0 sf
+0.376 0 0 r
+(        """)59.5 772.4 ms
+0 g
+(        objects )59.5 762.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( {})s
+(        objs )59.5 752.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.current_state[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].objects)s
+(        )59.5 742.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( o )s
+0.376 0 0.376 r
+(in)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(objs\):)s
+(            key )59.5 732.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( o.name)s
+(            type_name )59.5 722.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(o.var_type\))s
+(            value )59.5 712.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pyper.)s
+0 0 0.376 r
+(Type)s
+0 g
+(\(type_name, self.root_object_type\))s
+(            objects.)59.5 702.4 ms
+0 0 0.376 r
+(update)s
+0 g
+(\({key : value}\))s
+(        )59.5 692.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( objects)s
+(    )59.5 652.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(step)s
+0 g
+(\(self, action\):)s
+(        )59.5 642.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(")s
+0.498 0.125 0.498 r
+(\\t\\t\\t)s
+0.376 0 0 r
+(===DEBUG===")s
+0 g
+(\))s
+(        )59.5 632.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t\\t)s
+0.376 0 0 r
+(Action submitted by agent: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(action)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        action )59.5 622.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_ground_literal)s
+0 g
+(\(action\) )s
+0.376 0 0.376 r
+(#Allows me to provide lifted actions)s
+0 g
+(        )59.5 612.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t\\t)s
+0.376 0 0 r
+(Grounded Action: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(action)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        action_pddlgym )59.5 602.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_action_pyper_to_pddlgym)s
+0 g
+(\(action\))s
+(        )59.5 592.4 ms
+0 0 0.376 r
+(print)s
+0 g
+(\()s
+0.376 0 0 r
+(f")s
+0.498 0.125 0.498 r
+(\\t\\t\\t)s
+0.376 0 0 r
+(Actual PDDLGym Action: )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(action_pddlgym)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(")s
+0 g
+(\))s
+(        next_state )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.env.)s
+0 0 0.376 r
+(step)s
+0 g
+(\(action_pddlgym\))s
+(        self.history.)59.5 572.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(action\))s
+(        self.current_state )59.5 562.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( next_state)s
+(        )59.5 552.4 ms
+0.376 0 0.376 r
+(# print\(f"\\t\\t\\tCurrent state: {self.current_state}"\))s
+0 g
+(        )59.5 532.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(observe)s
+0 g
+(\(\))s
+0.376 0 0.376 r
+(##############)59.5 512.4 ms
+0 g
+(    )59.5 482.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_ground_literal)s
+0 g
+(\(self, literal\):)s
+(        )59.5 472.4 ms
+0.376 0 0 r
+(""")s
+(        returns a literal grounded in either objects the agent knows about OR is hyp)59.5 462.4 ms
+(othesized)59.5 452.4 ms
+(        """)59.5 442.4 ms
+0 g
+(        )59.5 432.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_grounded_literal)s
+0 g
+(\(literal\):)s
+(            )59.5 422.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( literal)s
+(        name, args )59.5 402.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(literal\))s
+(        grounded_args )59.5 392.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 382.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(            grounded_arg )59.5 372.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_ground_arg)s
+0 g
+(\(arg\))s
+(            grounded_args.)59.5 362.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(grounded_arg\))s
+(        )59.5 342.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.)s
+0 0 0.376 r
+(_construct_literal)s
+0 g
+(\(name, grounded_args\))s
+(    )59.5 312.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_construct_literal)s
+0 g
+(\(self, name, args\):)s
+(        )59.5 302.4 ms
+0.376 0 0 r
+(""")s
+(        Returns a literal based on name and args)59.5 292.4 ms
+(        \(have t23\))59.5 282.4 ms
+(        """)59.5 272.4 ms
+0 g
+(        )59.5 262.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.376 0 0 r
+(f"\()s
+0.498 0.125 0.498 r
+({)s
+0 g
+(name)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( )s
+0.498 0.125 0.498 r
+({)s
+0.376 0 0 r
+(' ')s
+0 g
+(.join\(args\))s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\)")s
+0 g
+(    )59.5 232.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_ground_arg)s
+0 g
+(\(self, arg\):)s
+(        )59.5 222.4 ms
+0.376 0 0 r
+(""")s
+(        Returns a grounded arg)59.5 212.4 ms
+(        NOTE: if the object is hypothetical, this is added via self.add_objects\(\))59.5 202.4 ms
+(        """)59.5 192.4 ms
+0 g
+(        )59.5 182.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_grounded_arg)s
+0 g
+(\(arg\):)s
+(            )59.5 172.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( arg)s
+(        symbol, typing )59.5 162.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_arg)s
+0 g
+(\(arg\))s
+(        )59.5 152.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( self.type_keyed_objects[typing]:)s
+(            symbol )59.5 142.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(list)s
+0 g
+(\(self.type_keyed_objects[typing]\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            )59.5 132.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol)s
+(        )59.5 122.4 ms
+0 0 0.376 r
+(breakpoint)s
+0 g
+(\(\))s
+(        )59.5 112.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(ValueError)s
+0 g
+(\()s
+0.376 0 0 r
+("Not allowed to hypothesize objects here")s
+0 g
+(\))s
+(        )59.5 102.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(None)s
+0 g
+(    )59.5 72.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_parse_arg)s
+0 g
+(\(self, arg\):)s
+(        )59.5 62.4 ms
+0.376 0 0 r
+(""")s
+(        Returns symbol, typing)59.5 52.4 ms
+re sp
+%%PageTrailer
+%%Page: 3 3
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(construct/wrappers.py                                                         Page 3)59.5 792.4 ms
+F0 sf
+0.376 0 0 r
+(        input: ?x-t, t23-t, t23, *t234-t)59.5 772.4 ms
+(        output: ?x,t  or t23,t or t23,t or *t234-t)59.5 762.4 ms
+(        """)59.5 752.4 ms
+0 g
+(        )59.5 732.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("?")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(            )59.5 722.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("-")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(                symbol )59.5 712.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(                typing )59.5 702.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(])s
+(                )59.5 692.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol, typing)s
+(            )59.5 682.4 ms
+0.376 0 0.376 r
+(else)s
+0 g
+(:)s
+(                )59.5 672.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(ValueError)s
+0 g
+(\()s
+0.376 0 0 r
+(f"Argument \()s
+0.498 0.125 0.498 r
+({)s
+0 g
+(arg)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+(\) Must have at least constant or t)s
+(ype")59.5 662.4 ms
+0 g
+(\))s
+(        )59.5 652.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("-")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(            symbol )59.5 642.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            typing )59.5 632.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("-")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(])s
+(            )59.5 622.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol, typing)s
+(        symbol )59.5 602.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( arg)s
+(        )59.5 592.4 ms
+F1 sf
+0.376 0 0.376 r
+(try)s
+F0 sf
+0 g
+(:)s
+(            typing )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.token_keyed_objects[symbol])s
+(            )59.5 572.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( symbol, typing)s
+(        )59.5 562.4 ms
+F1 sf
+0.376 0 0.376 r
+(except)s
+F0 sf
+0 g
+(:)s
+(            )59.5 552.4 ms
+0.376 0 0.376 r
+(raise)s
+0 g
+( )s
+0 0 0.376 r
+(ValueError)s
+0 g
+(\()s
+0.376 0 0 r
+(f"The object )s
+0.498 0.125 0.498 r
+({)s
+0 g
+(arg)s
+0.498 0.125 0.498 r
+(})s
+0.376 0 0 r
+( does not exist anywhere")s
+0 g
+(\))s
+(    )59.5 522.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_is_grounded_literal)s
+0 g
+(\(self, literal\):)s
+(        )59.5 512.4 ms
+0.376 0 0 r
+(""")s
+(        Returns true of literal is grounded)59.5 502.4 ms
+(        """)59.5 492.4 ms
+0 g
+(        name, args )59.5 472.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(_parse_literal)s
+0 g
+(\(literal\))s
+(        )59.5 462.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( arg )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args:)s
+(            )59.5 452.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0.376 r
+(not)s
+0 g
+( self.)s
+0 0 0.376 r
+(_is_grounded_arg)s
+0 g
+(\(arg\):)s
+(                )59.5 442.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(        )59.5 432.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(    )59.5 402.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_parse_literal)s
+0 g
+(\(self, literal\):)s
+(        )59.5 392.4 ms
+0.376 0 0 r
+(""")s
+(        Gets name, and arguments from a string literal as a string, list)59.5 382.4 ms
+(        note: an arg could be "t23" or "?x-t" or "t23-t", assuming well formed.)59.5 372.4 ms
+(        """)59.5 362.4 ms
+0 g
+(        name )59.5 342.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( literal.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(        args )59.5 332.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( literal.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(:])s
+(        )59.5 322.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( name, args)s
+(    )59.5 302.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_is_grounded_arg)s
+0 g
+(\(self, arg\):)s
+(        )59.5 292.4 ms
+0.376 0 0 r
+(""")s
+(        Given an arg, checks if it is grounded)59.5 282.4 ms
+(        arg = "?x-t" or "t23" or "t23-t" or "*t234")59.5 272.4 ms
+(        """)59.5 262.4 ms
+0 g
+(        )59.5 242.4 ms
+0.376 0 0.376 r
+(if)s
+0 g
+( )s
+0.376 0 0 r
+("?")s
+0 g
+( )s
+0.376 0 0.376 r
+(in)s
+0 g
+( arg:)s
+(            )59.5 232.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(False)s
+0 g
+(        )59.5 222.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0.498 0.125 0.498 r
+(True)s
+0 g
+(    )59.5 192.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_get_objects)s
+0 g
+(\(self\):)s
+(        )59.5 182.4 ms
+0.376 0 0 r
+(""")s
+(        Returns objects as a dicts, keyed by types, keyed by object)59.5 172.4 ms
+(        """)59.5 162.4 ms
+0 g
+(        type_keyed_objects )59.5 142.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( collections.)s
+0 0 0.376 r
+(defaultdict)s
+0 g
+(\()s
+0 0 0.376 r
+(set)s
+0 g
+(\))s
+(        token_keyed_objects )59.5 132.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( collections.)s
+0 0 0.376 r
+(defaultdict)s
+0 g
+(\(\))s
+(        objects_dict )59.5 122.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( self.)s
+0 0 0.376 r
+(objects)s
+0 g
+(\(\) )s
+0.376 0 0.376 r
+(###*** LOOKS AT ENV ***********)s
+0 g
+(        )59.5 102.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( k, v )s
+0.376 0 0.376 r
+(in)s
+0 g
+( objects_dict.)s
+0 0 0.376 r
+(items)s
+0 g
+(\(\):)s
+(            type_keyed_objects[v.name].)59.5 92.4 ms
+0 0 0.376 r
+(add)s
+0 g
+(\(k\))s
+(            token_keyed_objects[k] )59.5 82.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( v.name)s
+(        )59.5 62.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( type_keyed_objects, token_keyed_objects)s
+re sp
+%%PageTrailer
+%%Page: 4 4
+%%BeginPageSetup
+sv
+0 g
+F0 sf
+%%EndPageSetup
+F1 sf
+(construct/wrappers.py                                                         Page 4)59.5 792.4 ms
+F0 sf
+0.376 0 0.376 r
+(###########)59.5 742.4 ms
+0 g
+(    )59.5 682.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(get_history)s
+0 g
+(\(self\):)s
+(        )59.5 672.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( self.history)s
+(    )59.5 652.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_action_pyper_to_pddlgym)s
+0 g
+(\(self, action\):)s
+(        )59.5 642.4 ms
+0.376 0 0 r
+(""")s
+(        \(move p3 k1\) --> pddlgym representation)59.5 632.4 ms
+(        """)59.5 622.4 ms
+0 g
+(        name )59.5 612.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( action.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(        objs )59.5 602.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(self.current_state[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].objects\))s
+(        args )59.5 592.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( action.)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(replace)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(,)s
+0.376 0 0 r
+("")s
+0 g
+(\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(" ")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(:])s
+(        arity )59.5 582.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(len)s
+0 g
+(\(args\))s
+(        typed_args )59.5 572.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [ \()s
+0.376 0 0.376 r
+(lambda)s
+0 g
+( x: [x )s
+0.376 0 0.376 r
+(for)s
+0 g
+( x )s
+0.376 0 0.376 r
+(in)s
+0 g
+( objs )s
+0.376 0 0.376 r
+(if)s
+0 g
+( x )s
+0.376 0 0.376 r
+(==)s
+0 g
+( y][)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(]\)\(y\) )s
+0.376 0 0.376 r
+(for)s
+0 g
+( y )s
+0.376 0 0.376 r
+(in)s
+0 g
+( args])s
+(        action_pddlgym )59.5 562.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pgym.)s
+0 0 0.376 r
+(Literal)s
+0 g
+(\(pgym.)s
+0 0 0.376 r
+(Predicate)s
+0 g
+(\(name, arity\), typed_args\))s
+(        )59.5 552.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( action_pddlgym)s
+(    )59.5 522.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_obs_pddlgym_to_pyper)s
+0 g
+(\(self, obs\):)s
+(        predicates )59.5 512.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 502.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( item )s
+0.376 0 0.376 r
+(in)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(obs[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].literals\):)s
+(            name )59.5 492.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(item\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            list_args_str )59.5 482.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(item\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(].)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(",")s
+0 g
+(\))s
+(            signature )59.5 472.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [\(x.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(":")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(], [pyper.)s
+0 0 0.376 r
+(Type)s
+0 g
+(\(x.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(":")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(], self.root_ob)s
+(ject_type\)]\) )59.5 462.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( x )s
+0.376 0 0.376 r
+(in)s
+0 g
+( list_args_str])s
+(            pred )59.5 452.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( pyper.)s
+0 0 0.376 r
+(Predicate)s
+0 g
+(\(name, signature\))s
+(            predicates.)59.5 442.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(pred\))s
+(        )59.5 432.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( predicates)s
+(    )59.5 412.4 ms
+0.376 0 0.376 r
+(def)s
+0 g
+( )s
+0.376 0 0 r
+(_obs_pddlgym_to_pypertask)s
+0 g
+(\(self, obs\):)s
+(        literals )59.5 402.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [])s
+(        )59.5 392.4 ms
+0.376 0 0.376 r
+(for)s
+0 g
+( item )s
+0.376 0 0.376 r
+(in)s
+0 g
+( )s
+0 0 0.376 r
+(set)s
+0 g
+(\(obs[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].literals\):)s
+(            name )59.5 382.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(item\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(])s
+(            list_args_str )59.5 372.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0 0 0.376 r
+(str)s
+0 g
+(\(item\).)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\(")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(1)s
+0 g
+(].)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+("\)")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(].)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(",")s
+0 g
+(\))s
+(            new_args )59.5 362.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( [x.)s
+0 0 0.376 r
+(split)s
+0 g
+(\()s
+0.376 0 0 r
+(":")s
+0 g
+(\)[)s
+0.498 0.125 0.498 r
+(0)s
+0 g
+(] )s
+0.376 0 0.376 r
+(for)s
+0 g
+( x )s
+0.376 0 0.376 r
+(in)s
+0 g
+( list_args_str])s
+(            new_lit )59.5 352.4 ms
+0.376 0 0.376 r
+(=)s
+0 g
+( )s
+0.376 0 0 r
+("\(")s
+0.376 0 0.376 r
+(+)s
+0 g
+(name)s
+0.376 0 0.376 r
+(+)s
+0.376 0 0 r
+(" ")s
+0.376 0 0.376 r
+(+)s
+0.376 0 0 r
+(" ")s
+0 g
+(.)s
+0 0 0.376 r
+(join)s
+0 g
+(\(new_args\))s
+0.376 0 0.376 r
+(+)s
+0.376 0 0 r
+("\)")s
+0 g
+(            literals.)59.5 342.4 ms
+0 0 0.376 r
+(append)s
+0 g
+(\(new_lit\))s
+(        )59.5 332.4 ms
+0.376 0 0.376 r
+(return)s
+0 g
+( )s
+0 0 0.376 r
+(frozenset)s
+0 g
+(\(literals\))s
+re sp
+%%PageTrailer
+%%Trailer
+%%Pages: 4
+%%EOF
+

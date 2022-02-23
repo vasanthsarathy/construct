@@ -37,7 +37,7 @@ def cli(ctx, **kwargs):
 @click.command()
 @add_options(shared_options)
 @click.option('--agent', default="biplex", type=click.Choice(["random", "biplex"]), help="Choose agent")
-@click.option('--env', default="PDDLEnvTreasure-v0", type=click.Choice(["PDDLEnvPolycraft-v0", "PDDLEnvTreasure-v0"]), help="Choose pddlgym environment")
+@click.option('--env', default="PDDLEnvTreasure-v0", type=click.Choice(["PDDLEnvPancake-v0", "PDDLEnvTreasure-v0"]), help="Choose pddlgym environment")
 @click.option('--bias', default="agents/biplex/bias/treasure.pddl", help="Agent's domain bias file location")
 @click.option('--resource_graph', default="agents/biplex/bias/crafting_knowledge.gml", help="Agent's resource graph knowledge")
 @click.option('--goal', default="(have ?x-p)", help="Select goal for the agent")
