@@ -18,6 +18,9 @@ import copy
 import networkx as nx
 import click
 import collections
+from tqdm.auto import tqdm
+
+from itertools import chain, combinations
 # UPDATED to produce problem.pddl files instead of dealing with generating predicates etc.
 
 HYP_SYMBOL = "hyp_"
@@ -108,7 +111,6 @@ class BiplexAgent(Agent):
         The stripped domain has all the craft actions, but stripped down to zero precons
         """
         goal_in = self.goals.pop(0)
-
         s0 = self.env.observe() # Getting current state
 
         # We now use the non-executable domain file
@@ -158,9 +160,13 @@ class BiplexAgent(Agent):
             return self.execute(plan)
 
         if not plan:
-            print(f"Current state: {self.env.observe()}")
-            print(f"\tCould not generate a plan sketch. Give up. Bye.")
-            return False, s0
+            # print(f"Current state: {self.env.observe()}")
+            click.secho("\n💡 Entering Creative Mode ...", fg="bright_magenta", bold=True)
+            status, s1 = self.play(goal)
+            if not status:
+                print(f"\tCould not generate a plan sketch. Give up. Bye.")
+                return False, s0
+            return True, s1
 
         if not executable:
             objects_to_construct = set()
@@ -174,16 +180,108 @@ class BiplexAgent(Agent):
                         objects_to_construct.add(arg)
 
             for ob in objects_to_construct:
+                print(ob)
                 if ob in self.token_keyed_objects:
                     status, s1 = self.prove(self.token_keyed_objects[ob])
                     if not status:
+
                         print(f"Unable to construct object {ob}")
 
                         return False, s1
             return True, s1
-
-
         return False, s0
+
+    def play(self, goal):
+        # Get the object type for object of interest
+        _, args = self._parse_literal(goal)
+        _, typing = self._parse_arg(args[0])
+
+        # Now we can try to find a list of overlapping types
+        intersecting_types = []
+        types,_ = self._get_objects() ## Need to look at the env for all the objects and their types
+        for t in types.keys():
+            if not set(t).isdisjoint(typing): #this means if there is an overlap
+                intersecting_types.append(t)
+
+        if not intersecting_types:
+            return False, self.env.observe()
+
+        # Generate a powerset and look through each to see if it might work
+        intersecting_types_powerset = list(self._powerset(intersecting_types))
+        hypos = []
+        ACTION_NAME = 'mix1'
+        for item in intersecting_types_powerset:
+            combined_string = ''.join(list(item))
+            compacted_string = ''.join(set(combined_string))
+            # print(f"Combined: {compacted_string}")
+            if set(typing).issubset(compacted_string): #Check if all required properties are satisfied
+                # generate hypothesis
+                # Hypothesis is a crafting treelet of the mix action ideas
+                tree = nx.DiGraph()
+                tree.add_node(ACTION_NAME, type='anode')
+                tree.add_node(typing, type='tnode', value="have")
+                tree.add_node("rmc", type='tnode', value='have')
+                tree.add_edge(ACTION_NAME, typing)
+                for i in item:
+                    tree.add_node(i, type='tnode', value='have')
+                    tree.add_edge(i, ACTION_NAME)
+
+                tree.add_edge("rmc", ACTION_NAME)
+                hypos.append(tree)
+        print(f"\tFound {len(hypos)} hypotheses for goal:{goal}. Testing them...")
+        s0 = self.env.observe()
+        objects_s0 = self._get_objects()
+        bare_domain_loc = f"agents/biplex/temp/{self.config['env']}/domain_bare.pddl"
+        for hypo in tqdm(hypos, position=0, leave=True):
+            if self.config['verbose']:
+                print(f"\t\t{hypo.nodes}")
+            mix_domain = self._create_new_domain_file(hypo, ACTION_NAME, bare_domain_loc)
+            goal = f"(have ?x-{typing})"
+            status, s1 = self.plan_execute(goal=goal, domain_file=mix_domain)
+            if status:
+                # Look at the world and ensure that any unbound objects are properly recorded.typing
+                self._update_objects()
+
+                objects_s1 = self._get_objects()
+                # Check if the state changed
+                if self.config['verbose']:
+                    print("\t=== DEBUG ===")
+                    print(f"\tS0 ({type(s0)}): {s0}")
+                    print(f"\tS1 ({type(s1)}): {s1}")
+                    print(f"\tCurrent goal: {self.goal}")
+                    if self._is_same_state(objects_s0, objects_s1):
+                        print("No new type created")
+                    else:
+                        print("some new type was created")
+                if self._is_same_state(objects_s0, objects_s1):
+                    continue
+                else:
+                    self.completed.append(goal)
+                    return status, s1
+                    # self.goals.insert(0,self.goal)
+                    # return self.sketch()
+        return False, s0
+        # return False, self.env.observe()
+
+
+    def _is_same_state(self, objects_s0, objects_s1):
+        """
+        Given two states, checks if s1 contains a new type not in s0
+        """
+        types_s0 = objects_s0[0].keys()
+        types_s1 = objects_s1[0].keys()
+        if types_s0 == types_s1:
+            return True
+        return False
+
+
+
+    def _powerset(self,iterable):
+        "powerset([1,2,3]) --> (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
+        s = list(iterable)
+        return chain.from_iterable(combinations(s, r) for r in range(1, len(s)+1))
+
+
 
     def _get_objects_from_dicts(self):
         """
@@ -294,6 +392,11 @@ class BiplexAgent(Agent):
         return True
 
 
+    def _update_objects(self):
+        self.type_keyed_objects, self.token_keyed_objects = self._get_objects()
+        return
+
+
     def _get_objects(self):
         """
         Returns objects as a dicts, keyed by types, keyed by object
@@ -358,6 +461,15 @@ class BiplexAgent(Agent):
             if status:
                 self.goals.insert(0,self.goal)
                 return self.sketch()
+
+            # Try creative mode
+            click.secho("💡 Entering Creative Mode ...", fg="bright_cyan", bold=True)
+            status, s1 = self.play(goal)
+            if status:
+                return True, s1
+                # return True, s1
+
+            print(f"\tCould not figure this out. Give up. Bye.")
             return False, s1
         return True, self.env.observe()
 

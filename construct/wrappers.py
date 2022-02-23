@@ -95,6 +95,7 @@ class PyperWrapper(gym.Wrapper):
         if True in [char.isdigit() for char in action_name]:
             action = self._get_gym_action_match(action)
         # print(f"\t\t\tUpdated Grounded Action: {action}")
+        print(f"\t\t\tPDDLGym's interpretation: {action}")
 
         action_pddlgym = self._action_pyper_to_pddlgym(action)
         # print(f"\t\t\tActual PDDLGym Action: {action_pddlgym}")
@@ -125,8 +126,6 @@ class PyperWrapper(gym.Wrapper):
 
         if not avail_actions:
             return action
-
-
 
         # Next we have to check if for any of the available actions, we can bind all the params
         working_action = {}
@@ -207,8 +206,7 @@ class PyperWrapper(gym.Wrapper):
         if self.type_keyed_objects[typing]:
             symbol = list(self.type_keyed_objects[typing])[0]
             return symbol
-        breakpoint()
-        raise ValueError("Not allowed to hypothesize objects here")
+        # raise ValueError("Not allowed to hypothesize objects here")
         return None
 
 
